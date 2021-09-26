@@ -49,7 +49,7 @@ func (k Keeper) ValidateMsgCreatePool(ctx sdk.Context, msg *types.MsgCreatePool)
 	}
 
 	poolName := types.PoolName(reserveCoinDenoms, msg.PoolTypeId)
-	reserveAcc := types.GetPoolReserveAcc(poolName, false)
+	reserveAcc := types.GetPoolReserveAcc(poolName)
 	_, found := k.GetPoolByReserveAccIndex(ctx, reserveAcc)
 	if found {
 		return types.ErrPoolAlreadyExists
@@ -104,7 +104,7 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg *types.MsgCreatePool) (types.Poo
 		//Id: will set on SetPoolAtomic
 		TypeId:                msg.PoolTypeId,
 		ReserveCoinDenoms:     reserveCoinDenoms,
-		ReserveAccountAddress: types.GetPoolReserveAcc(poolName, false).String(),
+		ReserveAccountAddress: types.GetPoolReserveAcc(poolName).String(),
 		PoolCoinDenom:         types.GetPoolCoinDenom(poolName),
 	}
 
@@ -498,7 +498,9 @@ func (k Keeper) ExecuteWithdrawal(ctx sdk.Context, msg types.WithdrawMsgState, b
 
 // GetPoolCoinTotalSupply returns total supply of pool coin of the pool in form of sdk.Int
 func (k Keeper) GetPoolCoinTotalSupply(ctx sdk.Context, pool types.Pool) sdk.Int {
-	return k.bankKeeper.GetSupply(ctx, pool.PoolCoinDenom).Amount
+	supply := k.bankKeeper.GetSupply(ctx)
+	total := supply.GetTotal()
+	return total.AmountOf(pool.PoolCoinDenom)
 }
 
 // IsDepletedPool returns true if the pool is depleted.
@@ -552,9 +554,8 @@ func (k Keeper) GetPoolRecord(ctx sdk.Context, pool types.Pool) (types.PoolRecor
 // SetPoolRecord stores liquidity pool states
 func (k Keeper) SetPoolRecord(ctx sdk.Context, record types.PoolRecord) types.PoolRecord {
 	k.SetPoolAtomic(ctx, record.Pool)
-	if record.PoolBatch.BeginHeight > ctx.BlockHeight() {
-		record.PoolBatch.BeginHeight = 0
-	}
+	k.GetNextPoolBatchIndexWithUpdate(ctx, record.Pool.Id)
+	record.PoolBatch.BeginHeight = ctx.BlockHeight()
 	k.SetPoolBatch(ctx, record.PoolBatch)
 	k.SetPoolBatchDepositMsgStates(ctx, record.Pool.Id, record.DepositMsgStates)
 	k.SetPoolBatchWithdrawMsgStates(ctx, record.Pool.Id, record.WithdrawMsgStates)
@@ -659,7 +660,7 @@ func (k Keeper) TransactAndRefundSwapLiquidityPool(ctx sdk.Context, swapMsgState
 			sendCoin(poolReserveAcc, sms.Msg.GetSwapRequester(), sdk.NewCoin(sms.Msg.DemandCoinDenom, receiveAmt))
 			sendCoin(batchEscrowAcc, poolReserveAcc, sdk.NewCoin(sms.Msg.OfferCoin.Denom, offerCoinFeeAmt))
 
-			if sms.RemainingOfferCoin.Add(sms.ReservedOfferCoinFee).IsPositive() && sms.OrderExpiryHeight == ctx.BlockHeight() {
+			if sms.RemainingOfferCoin.IsPositive() && sms.OrderExpiryHeight == ctx.BlockHeight() {
 				sendCoin(batchEscrowAcc, sms.Msg.GetSwapRequester(), sms.RemainingOfferCoin.Add(sms.ReservedOfferCoinFee))
 			}
 
@@ -925,7 +926,7 @@ func (k Keeper) ValidatePoolRecord(ctx sdk.Context, record types.PoolRecord) err
 
 // IsPoolCoinDenom returns true if the denom is a valid pool coin denom.
 func (k Keeper) IsPoolCoinDenom(ctx sdk.Context, denom string) bool {
-	reserveAcc, err := types.GetReserveAcc(denom, false)
+	reserveAcc, err := types.GetReserveAcc(denom)
 	if err != nil {
 		return false
 	}

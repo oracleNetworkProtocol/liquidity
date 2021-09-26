@@ -32,7 +32,7 @@ The liquidity module uses a module account that acts as an escrow account. The m
 ## Refund 
 
 The liquidity module has refund functions when deposit, withdraw, or swap batch states are not successfully executed.
-Read [the batch transaction logic](https://github.com/oracleNetworkProtocol/liquidity/blob/e8ab2f4d75079157d008eba9f310b199573eed28/x/liquidity/keeper/batch.go#L83-L127) in the code for more context.
+Read [the batch transaction logic](https://github.com/tendermint/liquidity/blob/e8ab2f4d75079157d008eba9f310b199573eed28/x/liquidity/keeper/batch.go#L83-L127) in the code for more context.
 ## Fees
 
 You set liquidity module fees for pool creation, withdrawal, and swap in genesis state. These fees can be updated by the governance proposal.
@@ -45,7 +45,7 @@ The liquidity module has `WithdrawFeeRate` parameter that is paid upon withdrawa
 
 ### SwapFeeRate
 
-Swap fees are paid upon swap orders. They are accumulated in the pools and are shared among the liquidity providers. The liquidity module implements half-half-fee mechanism that minimizes the impact of fee payment process. Read [the issue about fees in half offer coins, half exchanged coins](https://github.com/oracleNetworkProtocol/liquidity/issues/41) to have more context.
+Swap fees are paid upon swap orders. They are accumulated in the pools and are shared among the liquidity providers. The liquidity module implements half-half-fee mechanism that minimizes the impact of fee payment process. Read [the issue about fees in half offer coins, half exchanged coins](https://github.com/tendermint/liquidity/issues/41) to have more context.
 ## Pool Identification
 
 The pools in the liquidity module are identified with:

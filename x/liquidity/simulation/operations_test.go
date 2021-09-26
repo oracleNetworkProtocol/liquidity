@@ -197,14 +197,15 @@ func createTestApp(isCheckTx bool) (*lapp.LiquidityApp, sdk.Context) {
 func getTestingAccounts(t *testing.T, r *rand.Rand, app *lapp.LiquidityApp, ctx sdk.Context, n int) []simtypes.Account {
 	accounts := simtypes.RandomAccounts(r, n)
 
-	initAmt := sdk.TokensFromConsensusPower(1_000_000, sdk.DefaultPowerReduction)
+	initAmt := sdk.TokensFromConsensusPower(1_000_000)
 	initCoins := sdk.NewCoins(sdk.NewCoin(sdk.DefaultBondDenom, initAmt))
 
 	// add coins to the accounts
 	for _, account := range accounts {
 		acc := app.AccountKeeper.NewAccountWithAddress(ctx, account.Address)
 		app.AccountKeeper.SetAccount(ctx, acc)
-		lapp.SaveAccount(app, ctx, account.Address, initCoins)
+		err := app.BankKeeper.SetBalances(ctx, account.Address, initCoins)
+		require.NoError(t, err)
 	}
 
 	return accounts

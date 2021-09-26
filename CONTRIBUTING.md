@@ -15,4 +15,4 @@ Rule of thumb:
 - Review code coverage report
 - Review if there is any linting issue
 
-See the [open issues](https://github.com/oracleNetworkProtocol/liquidity/issues) for things we need help with!
+See the [open issues](https://github.com/tendermint/liquidity/issues) for things we need help with!

@@ -40,8 +40,8 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
-			depCdc := clientCtx.Codec
-			cdc := depCdc.(codec.Codec)
+			depCdc := clientCtx.JSONMarshaler
+			cdc := depCdc.(codec.Marshaler)
 
 			serverCtx := server.GetServerContextFromCmd(cmd)
 			config := serverCtx.Config
@@ -51,7 +51,10 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 			addr, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
 				inBuf := bufio.NewReader(cmd.InOrStdin())
-				keyringBackend, _ := cmd.Flags().GetString(flags.FlagKeyringBackend)
+				keyringBackend, err := cmd.Flags().GetString(flags.FlagKeyringBackend)
+				if err != nil {
+					return err
+				}
 
 				// attempt to lookup address from Keybase if no address was provided
 				kb, err := keyring.New(sdk.KeyringServiceName(), keyringBackend, clientCtx.HomeDir, inBuf)
@@ -72,9 +75,18 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 				return fmt.Errorf("failed to parse coins: %w", err)
 			}
 
-			vestingStart, _ := cmd.Flags().GetInt64(flagVestingStart)
-			vestingEnd, _ := cmd.Flags().GetInt64(flagVestingEnd)
-			vestingAmtStr, _ := cmd.Flags().GetString(flagVestingAmt)
+			vestingStart, err := cmd.Flags().GetInt64(flagVestingStart)
+			if err != nil {
+				return err
+			}
+			vestingEnd, err := cmd.Flags().GetInt64(flagVestingEnd)
+			if err != nil {
+				return err
+			}
+			vestingAmtStr, err := cmd.Flags().GetString(flagVestingAmt)
+			if err != nil {
+				return err
+			}
 
 			vestingAmt, err := sdk.ParseCoinsNormalized(vestingAmtStr)
 			if err != nil {
@@ -171,7 +183,6 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 	}
 
 	cmd.Flags().String(flags.FlagHome, defaultNodeHome, "The application home directory")
-	cmd.Flags().String(flags.FlagKeyringBackend, flags.DefaultKeyringBackend, "Select keyring's backend (os|file|kwallet|pass|test)")
 	cmd.Flags().String(flagVestingAmt, "", "amount of coins for vesting accounts")
 	cmd.Flags().Int64(flagVestingStart, 0, "schedule start time (unix epoch) for vesting accounts")
 	cmd.Flags().Int64(flagVestingEnd, 0, "schedule end time (unix epoch) for vesting accounts")

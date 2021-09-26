@@ -17,7 +17,7 @@ This document provides a high-level overview of how the command line (CLI) and R
 - [MsgSwapWithinBatch](#msgswapwithinbatch)
   - Swap offer coin with demand coin from the liquidity pool with the given order price
 
-For error codes with the description, see [errors.go](https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/types/errors.go).
+For error codes with the description, see [errors.go](https://github.com/tendermint/liquidity/blob/develop/x/liquidity/types/errors.go).
 
 ## Query Command Line Interface
 
@@ -42,7 +42,7 @@ For error codes with the description, see [errors.go](https://github.com/oracleN
 - [Swaps](#swaps)
   - Query for all swap messages on the batch of the liquidity pool
 
-For error codes with the description, see [errors.go](https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/types/errors.go).
+For error codes with the description, see [errors.go](https://github.com/tendermint/liquidity/blob/develop/x/liquidity/types/errors.go).
 
 ## REST
 
@@ -61,7 +61,7 @@ curl --header "Content-Type: application/json" --request POST --data '{"tx_bytes
 Example `create-pool` tx command:
 
 ```bash
-liquidityd tx liquidity create-pool 1 1000000000uatom,50000000000uusd --from user1 --keyring-backend test --chain-id testing -b block -o json -y
+liquidityd tx liquidity create-pool 1 1000000000uatom,50000000000uusd --from user1 --keyring-backend test --chain-id testing -y
 ```
 
 JSON Structure:
@@ -71,7 +71,7 @@ JSON Structure:
   "body": {
     "messages": [
       {
-        "@type": "/tendermint.liquidity.v1beta1.MsgCreatePool",
+        "@type": "/tendermint.liquidity.MsgCreatePool",
         "pool_creator_address": "cosmos1s6cjfm4djg95jkzsfe490yfc9k6wazx6culyft",
         "pool_type_id": 1,
         "deposit_coins": [
@@ -120,32 +120,6 @@ Result
       "log": "",
       "events": [
         {
-          "type": "coin_received",
-          "attributes": [
-            {
-              "key": "receiver",
-              "value": "cosmos1jv65s3grqf6v6jl3dp4t6c9t9rk99cd88lyufl"
-            },
-            {
-              "key": "amount",
-              "value": "40000000stake"
-            }
-          ]
-        },
-        {
-          "type": "coin_spent",
-          "attributes": [
-            {
-              "key": "spender",
-              "value": "cosmos1s6cjfm4djg95jkzsfe490yfc9k6wazx6culyft"
-            },
-            {
-              "key": "amount",
-              "value": "40000000stake"
-            }
-          ]
-        },
-        {
           "type": "create_pool",
           "attributes": [
             {
@@ -179,7 +153,15 @@ Result
           "attributes": [
             {
               "key": "action",
-              "value": "/tendermint.liquidity.v1beta1.MsgCreatePool"
+              "value": "create_pool"
+            },
+            {
+              "key": "sender",
+              "value": "cosmos1s6cjfm4djg95jkzsfe490yfc9k6wazx6culyft"
+            },
+            {
+              "key": "sender",
+              "value": "cosmos1tx68a8k9yz54z06qfve9l2zxvgsz4ka3hr8962"
             },
             {
               "key": "sender",
@@ -196,6 +178,22 @@ Result
           "attributes": [
             {
               "key": "recipient",
+              "value": "cosmos1jmhkafh94jpgakr735r70t32sxq9wzkayzs9we"
+            },
+            {
+              "key": "amount",
+              "value": "1000000000uatom,50000000000uusd"
+            },
+            {
+              "key": "recipient",
+              "value": "cosmos1s6cjfm4djg95jkzsfe490yfc9k6wazx6culyft"
+            },
+            {
+              "key": "amount",
+              "value": "1000000pool96EF6EA6E5AC828ED87E8D07E7AE2A8180570ADD212117B2DA6F0B75D17A6295"
+            },
+            {
+              "key": "recipient",
               "value": "cosmos1jv65s3grqf6v6jl3dp4t6c9t9rk99cd88lyufl"
             },
             {
@@ -204,7 +202,7 @@ Result
             },
             {
               "key": "amount",
-              "value": "40000000stake"
+              "value": "100000000stake"
             }
           ]
         }
@@ -224,7 +222,7 @@ Result
 Example `deposit` tx command: 
 
 ```bash
-liquidityd tx liquidity deposit 1 100000000uatom,5000000000uusd --from validator --keyring-backend test --chain-id testing -y -b block
+liquidityd tx liquidity deposit 1 100000000uatom,5000000000uusd --from validator --keyring-backend test --chain-id testing -y
 ```
 
 JSON Structure:
@@ -234,7 +232,7 @@ JSON Structure:
   "body": {
     "messages": [
       {
-        "@type": "/tendermint.liquidity.v1beta1.MsgDepositWithinBatch",
+        "@type": "/tendermint.liquidity.MsgDepositWithinBatch",
         "depositor_address": "cosmos1h6ht09xx0ue0fqmezk7msgqcc9k20a5x5ynvc3",
         "pool_id": "1",
         "deposit_coins": [
@@ -283,32 +281,6 @@ Result:
       "log": "",
       "events": [
         {
-          "type": "coin_received",
-          "attributes": [
-            {
-              "key": "receiver",
-              "value": "cosmos1tx68a8k9yz54z06qfve9l2zxvgsz4ka3hr8962"
-            },
-            {
-              "key": "amount",
-              "value": "100000000uatom,5000000000uusd"
-            }
-          ]
-        },
-        {
-          "type": "coin_spent",
-          "attributes": [
-            {
-              "key": "spender",
-              "value": "cosmos1h6ht09xx0ue0fqmezk7msgqcc9k20a5x5ynvc3"
-            },
-            {
-              "key": "amount",
-              "value": "100000000uatom,5000000000uusd"
-            }
-          ]
-        },
-        {
           "type": "deposit_within_batch",
           "attributes": [
             {
@@ -334,7 +306,7 @@ Result:
           "attributes": [
             {
               "key": "action",
-              "value": "/tendermint.liquidity.v1beta1.MsgDepositWithinBatch"
+              "value": "deposit_within_batch"
             },
             {
               "key": "sender",
@@ -379,7 +351,7 @@ Result:
 Example `withdraw` tx command:
 
 ```bash
-liquidityd tx liquidity withdraw 1 10000pool96EF6EA6E5AC828ED87E8D07E7AE2A8180570ADD212117B2DA6F0B75D17A6295 --from validator --chain-id testing --keyring-backend test -b block -o json -y
+liquidityd tx liquidity withdraw 1 10000pool96EF6EA6E5AC828ED87E8D07E7AE2A8180570ADD212117B2DA6F0B75D17A6295 --from validator --chain-id testing --keyring-backend test -y
 ```
 
 JSON Structure
@@ -432,37 +404,11 @@ Result:
       "log": "",
       "events": [
         {
-          "type": "coin_received",
-          "attributes": [
-            {
-              "key": "receiver",
-              "value": "cosmos1tx68a8k9yz54z06qfve9l2zxvgsz4ka3hr8962"
-            },
-            {
-              "key": "amount",
-              "value": "10000pool96EF6EA6E5AC828ED87E8D07E7AE2A8180570ADD212117B2DA6F0B75D17A6295"
-            }
-          ]
-        },
-        {
-          "type": "coin_spent",
-          "attributes": [
-            {
-              "key": "spender",
-              "value": "cosmos1h6ht09xx0ue0fqmezk7msgqcc9k20a5x5ynvc3"
-            },
-            {
-              "key": "amount",
-              "value": "10000pool96EF6EA6E5AC828ED87E8D07E7AE2A8180570ADD212117B2DA6F0B75D17A6295"
-            }
-          ]
-        },
-        {
           "type": "message",
           "attributes": [
             {
               "key": "action",
-              "value": "/tendermint.liquidity.v1beta1.MsgWithdrawWithinBatch"
+              "value": "withdraw_within_batch"
             },
             {
               "key": "sender",
@@ -531,7 +477,7 @@ Result:
 Example `swap` tx command:
 
 ```bash
-liquidityd tx liquidity swap 1 1 50000000uusd uatom 0.019 0.003 --from validator --chain-id testing --keyring-backend test -b block -o json -y
+liquidityd tx liquidity swap 1 1 50000000uusd uatom 0.019 0.003 --from validator --chain-id testing --keyring-backend test -y
 ```
 
 JSON Structure:
@@ -591,37 +537,15 @@ Result:
       "log": "",
       "events": [
         {
-          "type": "coin_received",
-          "attributes": [
-            {
-              "key": "receiver",
-              "value": "cosmos1tx68a8k9yz54z06qfve9l2zxvgsz4ka3hr8962"
-            },
-            {
-              "key": "amount",
-              "value": "50075000uusd"
-            }
-          ]
-        },
-        {
-          "type": "coin_spent",
-          "attributes": [
-            {
-              "key": "spender",
-              "value": "cosmos1h6ht09xx0ue0fqmezk7msgqcc9k20a5x5ynvc3"
-            },
-            {
-              "key": "amount",
-              "value": "50075000uusd"
-            }
-          ]
-        },
-        {
           "type": "message",
           "attributes": [
             {
               "key": "action",
-              "value": "/tendermint.liquidity.v1beta1.MsgSwapWithinBatch"
+              "value": "swap_within_batch"
+            },
+            {
+              "key": "sender",
+              "value": "cosmos1h6ht09xx0ue0fqmezk7msgqcc9k20a5x5ynvc3"
             },
             {
               "key": "sender",
@@ -687,7 +611,19 @@ Result:
             },
             {
               "key": "amount",
-              "value": "50075000uusd"
+              "value": "50000000uusd"
+            },
+            {
+              "key": "recipient",
+              "value": "cosmos1tx68a8k9yz54z06qfve9l2zxvgsz4ka3hr8962"
+            },
+            {
+              "key": "sender",
+              "value": "cosmos1h6ht09xx0ue0fqmezk7msgqcc9k20a5x5ynvc3"
+            },
+            {
+              "key": "amount",
+              "value": "75000uusd"
             }
           ]
         }

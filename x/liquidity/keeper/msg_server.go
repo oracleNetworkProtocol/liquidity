@@ -138,6 +138,11 @@ func (k msgServer) Swap(goCtx context.Context, msg *types.MsgSwapWithinBatch) (*
 		return nil, types.ErrCircuitBreakerEnabled
 	}
 
+	params := k.GetParams(ctx)
+	if msg.OfferCoinFee.IsZero() {
+		msg.OfferCoinFee = types.GetOfferCoinFee(msg.OfferCoin, params.SwapFeeRate)
+	}
+
 	poolBatch, found := k.GetPoolBatch(ctx, msg.PoolId)
 	if !found {
 		return nil, types.ErrPoolBatchNotExists
@@ -145,7 +150,7 @@ func (k msgServer) Swap(goCtx context.Context, msg *types.MsgSwapWithinBatch) (*
 
 	batchMsg, err := k.Keeper.SwapWithinBatch(ctx, msg, types.CancelOrderLifeSpan)
 	if err != nil {
-		return nil, err
+		return &types.MsgSwapWithinBatchResponse{}, err
 	}
 
 	ctx.EventManager().EmitEvents(sdk.Events{
