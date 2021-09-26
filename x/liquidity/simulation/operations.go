@@ -10,9 +10,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	liquidityparams "github.com/tendermint/liquidity/app/params"
-	"github.com/tendermint/liquidity/x/liquidity/keeper"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	liquidityparams "github.com/oracleNetworkProtocol/liquidity/app/params"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/keeper"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 // Simulation operation weights constants.

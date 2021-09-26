@@ -7,7 +7,7 @@ import "google/api/annotations.proto";
 import "cosmos_proto/pagination.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
-option go_package = "github.com/tendermint/liquidity/x/liquidity/types";
+option go_package = "github.com/oracleNetworkProtocol/liquidity/x/liquidity/types";
 
 // Query defines the gRPC query service for the liquidity module.
 service Query {
@@ -17,7 +17,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all liquidity pools with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -39,7 +39,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns the liquidity pool that corresponds to the pool_id.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -71,7 +71,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "It returns the liquidity pool corresponding to the pool_coin_denom.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -104,7 +104,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "It returns the liquidity pool corresponding to the reserve account.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -136,7 +136,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns the current batch of the pool that corresponds to the pool_id.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -168,7 +168,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all swap messages in the current batch of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -200,7 +200,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns the swap message that corresponds to the msg_index in the pool's current batch";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -232,7 +232,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all deposit messages in the current batch of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -265,7 +265,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns the deposit message that corresponds to the msg_index in the pool's current batch.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -297,7 +297,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all withdraw messages in the current batch of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -330,7 +330,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns the withdraw message that corresponds to the msg_index in the pool's current batch.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -362,7 +362,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns all parameters of the liquidity module.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/08_params.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/08_params.md";
                 description: "Find out more about the params";
             }
         };

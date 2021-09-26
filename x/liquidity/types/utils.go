@@ -87,7 +87,7 @@ func GetOfferCoinFee(offerCoin sdk.Coin, swapFeeRate sdk.Dec) sdk.Coin {
 		return sdk.NewCoin(offerCoin.Denom, sdk.ZeroInt())
 	}
 	// apply half-ratio swap fee rate and ceiling
-	// see https://github.com/tendermint/liquidity/issues/41 for details
+	// see https://github.com/oracleNetworkProtocol/liquidity/issues/41 for details
 	return sdk.NewCoin(offerCoin.Denom, offerCoin.Amount.ToDec().Mul(swapFeeRate.QuoInt64(2)).Ceil().TruncateInt()) // Ceil(offerCoin.Amount * (swapFeeRate/2))
 }
 

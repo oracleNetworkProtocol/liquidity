@@ -167,7 +167,7 @@ paths:
       externalDocs:
         description: Find out more about the params
         url: >-
-          https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/08_params.md
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/08_params.md
   /cosmos/liquidity/v1beta1/pools:
     get:
       summary: Get existing liquidity pools.
@@ -322,7 +322,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/pool_coin_denom/{pool_coin_denom}':
     get:
       summary: Get specific liquidity pool corresponding to the pool_coin_denom.
@@ -424,7 +424,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/reserve_acc/{reserve_acc}':
     get:
       summary: Get specific liquidity pool corresponding to the reserve account.
@@ -526,7 +526,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}':
     get:
       summary: Get specific liquidity pool.
@@ -628,7 +628,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch':
     get:
       summary: Get the pool's current batch.
@@ -740,7 +740,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/deposits':
     get:
       summary: Get all deposit messages in the pool's current batch.
@@ -843,7 +843,7 @@ paths:
 
 
                         See:
-                        https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                        https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
                   description: >-
                     DepositMsgState defines the state of deposit message that
                     contains state information as it is processed in the next
@@ -971,7 +971,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/deposits/{msg_index}':
     get:
       summary: Get a specific deposit message in the pool's current batch.
@@ -1072,7 +1072,7 @@ paths:
 
 
                       See:
-                      https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                      https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
                 description: >-
                   DepositMsgState defines the state of deposit message that
                   contains state information as it is processed in the next
@@ -1140,7 +1140,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/swaps':
     get:
       summary: Get all swap messages in the pool's current batch.
@@ -1360,9 +1360,9 @@ paths:
 
 
                         See:
-                        https://github.com/tendermint/liquidity/tree/develop/doc
+                        https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
-                        https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                        https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
                   description: >-
                     SwapMsgState defines the state of the swap message that
                     contains state information as the message is processed in
@@ -1490,7 +1490,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/swaps/{msg_index}':
     get:
       summary: Get a specific swap message in the pool's current batch.
@@ -1708,9 +1708,9 @@ paths:
 
 
                       See:
-                      https://github.com/tendermint/liquidity/tree/develop/doc
+                      https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
-                      https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                      https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
                 description: >-
                   SwapMsgState defines the state of the swap message that
                   contains state information as the message is processed in the
@@ -1778,7 +1778,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/withdraws':
     get:
       summary: Get all withdraw messages in the pool's current batch.
@@ -1877,7 +1877,7 @@ paths:
 
 
                         See:
-                        https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                        https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
                   description: >-
                     WithdrawMsgState defines the state of the withdraw message
                     that contains state information as the message is processed
@@ -2005,7 +2005,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/withdraws/{msg_index}':
     get:
       summary: Get a specific withdraw message in the pool's current batch.
@@ -2102,7 +2102,7 @@ paths:
 
 
                       See:
-                      https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                      https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
                 description: >-
                   WithdrawMsgState defines the state of the withdraw message
                   that contains state information as the message is processed in
@@ -2170,7 +2170,7 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/tendermint/liquidity/blob/develop/doc/client.md'
+        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
 definitions:
   cosmos.base.query.v1beta1.PageRequest:
     type: object
@@ -2364,7 +2364,7 @@ definitions:
 
 
           See:
-          https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
     description: >-
       DepositMsgState defines the state of deposit message that contains state
       information as it is processed in the next batch or batches.
@@ -2421,7 +2421,7 @@ definitions:
 
 
       See:
-      https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+      https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
   tendermint.liquidity.v1beta1.MsgSwapWithinBatch:
     type: object
     properties:
@@ -2515,9 +2515,9 @@ definitions:
       Only the default `swap_type_id` 1 is supported.
 
 
-      See: https://github.com/tendermint/liquidity/tree/develop/doc
+      See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
-      https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+      https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
   tendermint.liquidity.v1beta1.MsgWithdrawWithinBatch:
     type: object
     properties:
@@ -2565,7 +2565,7 @@ definitions:
 
 
       See:
-      https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+      https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
   tendermint.liquidity.v1beta1.Params:
     type: object
     properties:
@@ -3145,7 +3145,7 @@ definitions:
 
 
               See:
-              https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+              https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
         description: >-
           DepositMsgState defines the state of deposit message that contains
           state information as it is processed in the next batch or batches.
@@ -3241,7 +3241,7 @@ definitions:
 
 
                 See:
-                https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
           description: >-
             DepositMsgState defines the state of deposit message that contains
             state information as it is processed in the next batch or batches.
@@ -3468,9 +3468,9 @@ definitions:
               Only the default `swap_type_id` 1 is supported.
 
 
-              See: https://github.com/tendermint/liquidity/tree/develop/doc
+              See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
-              https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+              https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
         description: >-
           SwapMsgState defines the state of the swap message that contains state
           information as the message is processed in the next batch or batches.
@@ -3678,9 +3678,9 @@ definitions:
                 Only the default `swap_type_id` 1 is supported.
 
 
-                See: https://github.com/tendermint/liquidity/tree/develop/doc
+                See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
-                https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
           description: >-
             SwapMsgState defines the state of the swap message that contains
             state information as the message is processed in the next batch or
@@ -3792,7 +3792,7 @@ definitions:
 
 
               See:
-              https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+              https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
         description: >-
           WithdrawMsgState defines the state of the withdraw message that
           contains state information as the message is processed in the next
@@ -3885,7 +3885,7 @@ definitions:
 
 
                 See:
-                https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+                https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
           description: >-
             WithdrawMsgState defines the state of the withdraw message that
             contains state information as the message is processed in the next
@@ -4099,9 +4099,9 @@ definitions:
           Only the default `swap_type_id` 1 is supported.
 
 
-          See: https://github.com/tendermint/liquidity/tree/develop/doc
+          See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
-          https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
     description: >-
       SwapMsgState defines the state of the swap message that contains state
       information as the message is processed in the next batch or batches.
@@ -4184,7 +4184,7 @@ definitions:
 
 
           See:
-          https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
     description: >-
       WithdrawMsgState defines the state of the withdraw message that contains
       state information as the message is processed in the next batch or

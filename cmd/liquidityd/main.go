@@ -6,9 +6,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 
-	liquidity "github.com/tendermint/liquidity/app"
-	_ "github.com/tendermint/liquidity/client/docs/statik"
-	"github.com/tendermint/liquidity/cmd/liquidityd/cmd"
+	liquidity "github.com/oracleNetworkProtocol/liquidity/app"
+	_ "github.com/oracleNetworkProtocol/liquidity/client/docs/statik"
+	"github.com/oracleNetworkProtocol/liquidity/cmd/liquidityd/cmd"
 )
 
 func main() {

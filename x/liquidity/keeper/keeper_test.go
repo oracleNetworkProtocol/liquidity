@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	lapp "github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/x/liquidity/keeper"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	lapp "github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/keeper"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 type KeeperTestSuite struct {

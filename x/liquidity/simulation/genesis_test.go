@@ -12,8 +12,8 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/liquidity/x/liquidity/simulation"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/simulation"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 // TestRandomizedGenState tests the normal scenario of applying RandomizedGenState.

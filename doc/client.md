@@ -17,7 +17,7 @@ This document provides a high-level overview of how the command line (CLI) and R
 - [MsgSwapWithinBatch](#msgswapwithinbatch)
   - Swap offer coin with demand coin from the liquidity pool with the given order price
 
-For error codes with the description, see [errors.go](https://github.com/tendermint/liquidity/blob/develop/x/liquidity/types/errors.go).
+For error codes with the description, see [errors.go](https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/types/errors.go).
 
 ## Query Command Line Interface
 
@@ -42,7 +42,7 @@ For error codes with the description, see [errors.go](https://github.com/tenderm
 - [Swaps](#swaps)
   - Query for all swap messages on the batch of the liquidity pool
 
-For error codes with the description, see [errors.go](https://github.com/tendermint/liquidity/blob/develop/x/liquidity/types/errors.go).
+For error codes with the description, see [errors.go](https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/types/errors.go).
 
 ## REST
 

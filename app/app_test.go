@@ -34,7 +34,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 
-	"github.com/tendermint/liquidity/x/liquidity"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity"
 )
 
 func TestSimAppExportAndBlockedAddrs(t *testing.T) {

@@ -5,9 +5,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/x/liquidity"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 // createTestInput Returns a simapp with custom LiquidityKeeper

@@ -8,8 +8,8 @@ import (
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 func TestParams(t *testing.T) {

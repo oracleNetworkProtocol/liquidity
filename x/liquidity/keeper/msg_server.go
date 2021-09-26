@@ -12,7 +12,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 type msgServer struct {

@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/tendermint/liquidity/x/liquidity/keeper"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/keeper"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 // NewHandler returns a handler for all "liquidity" type messages.

@@ -33,7 +33,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MsgCreatePool defines an sdk.Msg type that supports submitting a create liquidity pool tx.
 //
-// See: https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+// See: https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
 type MsgCreatePool struct {
 	PoolCreatorAddress string `protobuf:"bytes,1,opt,name=pool_creator_address,json=poolCreatorAddress,proto3" json:"pool_creator_address,omitempty" yaml:"pool_creator_address"`
 	// id of the target pool type, must match the value in the pool. Only pool-type-id 1 is supported.
@@ -119,7 +119,7 @@ var xxx_messageInfo_MsgCreatePoolResponse proto.InternalMessageInfo
 // This request is stacked in the batch of the liquidity pool, is not processed
 // immediately, and is processed in the `endblock` at the same time as other requests.
 //
-// See: https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+// See: https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
 type MsgDepositWithinBatch struct {
 	DepositorAddress string `protobuf:"bytes,1,opt,name=depositor_address,json=depositorAddress,proto3" json:"depositor_address,omitempty" yaml:"depositor_address"`
 	// id of the target pool
@@ -205,7 +205,7 @@ var xxx_messageInfo_MsgDepositWithinBatchResponse proto.InternalMessageInfo
 // This request is stacked in the batch of the liquidity pool, is not processed
 // immediately, and is processed in the `endblock` at the same time as other requests.
 //
-// See: https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+// See: https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
 type MsgWithdrawWithinBatch struct {
 	WithdrawerAddress string `protobuf:"bytes,1,opt,name=withdrawer_address,json=withdrawerAddress,proto3" json:"withdrawer_address,omitempty" yaml:"withdrawer_address"`
 	// id of the target pool
@@ -292,8 +292,8 @@ var xxx_messageInfo_MsgWithdrawWithinBatchResponse proto.InternalMessageInfo
 // You must request the same fields as the pool.
 // Only the default `swap_type_id` 1 is supported.
 //
-// See: https://github.com/tendermint/liquidity/tree/develop/doc
-// https://github.com/tendermint/liquidity/blob/develop/x/liquidity/spec/04_messages.md
+// See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+// https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
 type MsgSwapWithinBatch struct {
 	// address of swap requester
 	SwapRequesterAddress string `protobuf:"bytes,1,opt,name=swap_requester_address,json=swapRequesterAddress,proto3" json:"swap_requester_address,omitempty" yaml:"swap_requester_address"`

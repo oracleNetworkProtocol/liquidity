@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/x/liquidity"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 func TestGenesis(t *testing.T) {

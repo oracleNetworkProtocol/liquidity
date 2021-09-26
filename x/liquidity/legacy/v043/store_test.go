@@ -13,9 +13,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	v042liquidity "github.com/tendermint/liquidity/x/liquidity/legacy/v042"
-	v043liquidity "github.com/tendermint/liquidity/x/liquidity/legacy/v043"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	v042liquidity "github.com/oracleNetworkProtocol/liquidity/x/liquidity/legacy/v042"
+	v043liquidity "github.com/oracleNetworkProtocol/liquidity/x/liquidity/legacy/v043"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 func TestStoreMigration(t *testing.T) {

@@ -15,8 +15,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil/network"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	liquidityapp "github.com/tendermint/liquidity/app"
-	liquiditycli "github.com/tendermint/liquidity/x/liquidity/client/cli"
+	liquidityapp "github.com/oracleNetworkProtocol/liquidity/app"
+	liquiditycli "github.com/oracleNetworkProtocol/liquidity/x/liquidity/client/cli"
 
 	dbm "github.com/tendermint/tm-db"
 )

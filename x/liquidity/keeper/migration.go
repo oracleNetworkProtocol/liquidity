@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	v043 "github.com/tendermint/liquidity/x/liquidity/legacy/v043"
+	v043 "github.com/oracleNetworkProtocol/liquidity/x/liquidity/legacy/v043"
 )
 
 // Migrator is a struct for handling in-place store migrations.

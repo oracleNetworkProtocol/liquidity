@@ -31,8 +31,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
-	liquidity "github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/app/params"
+	liquidity "github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/app/params"
 )
 
 func NewRootCmd() (*cobra.Command, params.EncodingConfig) {

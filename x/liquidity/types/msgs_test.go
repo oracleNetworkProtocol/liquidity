@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/tendermint/tendermint/crypto"
 
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 const (

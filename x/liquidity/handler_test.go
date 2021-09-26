@@ -9,9 +9,9 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/x/liquidity"
-	"github.com/tendermint/liquidity/x/liquidity/types"
+	"github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
 )
 
 func TestBadMsg(t *testing.T) {
