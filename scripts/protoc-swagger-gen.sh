@@ -24,4 +24,4 @@ done
 swagger-combine ./client/docs/config.json -o ./client/docs/swagger-ui/swagger.yaml -f yaml --continueOnConflictingPaths true --includeDefinitions true
 
 # clean swagger files
-rm -rf ./tmp-swagger-gen
+# rm -rf ./tmp-swagger-gen

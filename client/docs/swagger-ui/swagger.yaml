@@ -3468,7 +3468,8 @@ definitions:
               Only the default `swap_type_id` 1 is supported.
 
 
-              See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+              See:
+              https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
               https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
         description: >-
@@ -3678,7 +3679,8 @@ definitions:
                 Only the default `swap_type_id` 1 is supported.
 
 
-                See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+                See:
+                https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
                 https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
           description: >-
@@ -4099,7 +4101,8 @@ definitions:
           Only the default `swap_type_id` 1 is supported.
 
 
-          See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+          See:
+          https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
           https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
     description: >-
