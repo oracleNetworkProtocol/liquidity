@@ -322,7 +322,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/pool_coin_denom/{pool_coin_denom}':
     get:
       summary: Get specific liquidity pool corresponding to the pool_coin_denom.
@@ -424,7 +425,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/reserve_acc/{reserve_acc}':
     get:
       summary: Get specific liquidity pool corresponding to the reserve account.
@@ -526,7 +528,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}':
     get:
       summary: Get specific liquidity pool.
@@ -628,7 +631,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch':
     get:
       summary: Get the pool's current batch.
@@ -740,7 +744,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/deposits':
     get:
       summary: Get all deposit messages in the pool's current batch.
@@ -971,7 +976,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/deposits/{msg_index}':
     get:
       summary: Get a specific deposit message in the pool's current batch.
@@ -1140,7 +1146,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/swaps':
     get:
       summary: Get all swap messages in the pool's current batch.
@@ -1490,7 +1497,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/swaps/{msg_index}':
     get:
       summary: Get a specific swap message in the pool's current batch.
@@ -1778,7 +1786,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/withdraws':
     get:
       summary: Get all withdraw messages in the pool's current batch.
@@ -2005,7 +2014,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
   '/cosmos/liquidity/v1beta1/pools/{pool_id}/batch/withdraws/{msg_index}':
     get:
       summary: Get a specific withdraw message in the pool's current batch.
@@ -2170,7 +2180,8 @@ paths:
         - Query
       externalDocs:
         description: Find out more about the query and error codes
-        url: 'https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md'
+        url: >-
+          https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md
 definitions:
   cosmos.base.query.v1beta1.PageRequest:
     type: object
@@ -3468,7 +3479,8 @@ definitions:
               Only the default `swap_type_id` 1 is supported.
 
 
-              See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+              See:
+              https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
               https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
         description: >-
@@ -3678,7 +3690,8 @@ definitions:
                 Only the default `swap_type_id` 1 is supported.
 
 
-                See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+                See:
+                https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
                 https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
           description: >-
@@ -4099,7 +4112,8 @@ definitions:
           Only the default `swap_type_id` 1 is supported.
 
 
-          See: https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
+          See:
+          https://github.com/oracleNetworkProtocol/liquidity/tree/develop/doc
 
           https://github.com/oracleNetworkProtocol/liquidity/blob/develop/x/liquidity/spec/04_messages.md
     description: >-
