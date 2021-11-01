@@ -156,6 +156,9 @@ func (orderBook OrderBook) Match(x, y sdk.Dec) (BatchResult, bool) {
 
 // Check orderbook validity naively
 func (orderBook OrderBook) Validate(currentPrice sdk.Dec) bool {
+	if !currentPrice.IsPositive() {
+		return false
+	}
 	maxBuyOrderPrice := sdk.ZeroDec()
 	minSellOrderPrice := sdk.NewDec(1000000000000)
 	for _, order := range orderBook {
@@ -324,7 +327,6 @@ func (orderBook OrderBook) PriceDirection(currentPrice sdk.Dec) PriceDirection {
 			sellAmtUnderCurrentPrice = sellAmtUnderCurrentPrice.Add(order.SellOfferAmt.ToDec())
 		}
 	}
-
 	if buyAmtOverCurrentPrice.GT(currentPrice.Mul(sellAmtUnderCurrentPrice.Add(sellAmtAtCurrentPrice))) {
 		return Increasing
 	} else if currentPrice.Mul(sellAmtUnderCurrentPrice).GT(buyAmtOverCurrentPrice.Add(buyAmtAtCurrentPrice)) {
@@ -507,8 +509,12 @@ func FindOrderMatch(direction OrderDirection, swapMsgStates []*SwapMsgState, exe
 						TransactedCoinAmt: offerAmt.Mul(fractionalMatchRatio).Ceil(),
 						SwapMsgState:      matchOrder,
 					}
-					// Fee, Exchanged amount are values that should not be overmeasured, so it is lowered conservatively considering the decimal error.
-					matchResult.OfferCoinFeeAmt = matchResult.SwapMsgState.ReservedOfferCoinFee.Amount.ToDec().Mul(fractionalMatchRatio)
+					if matchResult.OfferCoinAmt.Sub(matchResult.TransactedCoinAmt).LTE(sdk.OneDec()) {
+						// Use ReservedOfferCoinFee to avoid decimal errors when OfferCoinAmt and TransactedCoinAmt are almost equal in value.
+						matchResult.OfferCoinFeeAmt = matchResult.SwapMsgState.ReservedOfferCoinFee.Amount.ToDec()
+					} else {
+						matchResult.OfferCoinFeeAmt = matchResult.SwapMsgState.ReservedOfferCoinFee.Amount.ToDec().Mul(fractionalMatchRatio)
+					}
 					if direction == DirectionXtoY {
 						matchResult.ExchangedDemandCoinAmt = matchResult.TransactedCoinAmt.Quo(swapPrice)
 						matchResult.ExchangedCoinFeeAmt = matchResult.OfferCoinFeeAmt.Quo(swapPrice)
@@ -568,9 +574,8 @@ func UpdateSwapMsgStates(x, y sdk.Dec, xToY, yToX []*SwapMsgState, matchResultXt
 			poolXDelta = poolXDelta.Sub(match.ExchangedDemandCoinAmt)
 			poolYDelta = poolYDelta.Add(match.TransactedCoinAmt)
 		}
-		if sms.Msg.OfferCoin.Amount.ToDec().Sub(match.TransactedCoinAmt).LTE(sdk.OneDec()) ||
-			sms.RemainingOfferCoin.Amount.ToDec().Sub(match.TransactedCoinAmt).LTE(sdk.OneDec()) {
-			// full match
+		if sms.RemainingOfferCoin.Amount.ToDec().Sub(match.TransactedCoinAmt).LTE(sdk.OneDec()) {
+			// when RemainingOfferCoin and TransactedCoinAmt are almost equal in value, corrects the decimal error and processes as a exact match.
 			sms.ExchangedOfferCoin.Amount = sms.ExchangedOfferCoin.Amount.Add(match.TransactedCoinAmt.TruncateInt())
 			sms.RemainingOfferCoin.Amount = sms.RemainingOfferCoin.Amount.Sub(match.TransactedCoinAmt.TruncateInt())
 			sms.ReservedOfferCoinFee.Amount = sms.ReservedOfferCoinFee.Amount.Sub(match.OfferCoinFeeAmt.TruncateInt())
