@@ -323,6 +323,17 @@ func (k Keeper) ExecuteDeposit(ctx sdk.Context, msg types.DepositMsgState, batch
 	msg.ToBeDeleted = true
 	k.SetPoolBatchDepositMsgState(ctx, msg.Msg.PoolId, msg)
 
+	var depositeSuccessMsg = types.DepositSuccessMsg{
+		MsgHeight:        msg.MsgHeight,
+		DepositorAddress: msg.Msg.DepositorAddress,
+		PoolId:           pool.Id,
+		MsgIndex:         msg.MsgIndex,
+		DepositCoins:     acceptedCoins,
+		InputCoins:       msg.Msg.DepositCoins,
+		OutputCoins:      refundedCoins,
+	}
+	k.SetPoolDepositSuccessMsg(ctx, msg.Msg.PoolId, depositor, depositeSuccessMsg)
+
 	if BatchLogicInvariantCheckFlag {
 		afterReserveCoins := k.GetReserveCoins(ctx, pool)
 		afterReserveCoinA := afterReserveCoins[0].Amount

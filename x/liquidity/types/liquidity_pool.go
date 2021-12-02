@@ -130,6 +130,17 @@ func MustUnmarshalPoolBatch(cdc codec.BinaryMarshaler, value []byte) PoolBatch {
 }
 
 // MustMarshalDepositMsgState returns the DepositMsgState bytes. Panics if fails.
+func MustMarshalDepositSuccessMsg(cdc codec.BinaryMarshaler, msg DepositSuccessMsg) []byte {
+	return cdc.MustMarshalBinaryBare(&msg)
+}
+
+// UnmarshalDepositMsgState returns the DepositMsgState from bytes.
+func UnmarshalDepositSuccessMsg(cdc codec.BinaryMarshaler, value []byte) (msg DepositSuccessMsg, err error) {
+	err = cdc.UnmarshalBinaryBare(value, &msg)
+	return msg, err
+}
+
+// MustMarshalDepositMsgState returns the DepositMsgState bytes. Panics if fails.
 func MustMarshalDepositMsgState(cdc codec.BinaryMarshaler, msg DepositMsgState) []byte {
 	return cdc.MustMarshalBinaryBare(&msg)
 }

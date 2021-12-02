@@ -34,7 +34,40 @@ var (
 	PoolBatchDepositMsgStateIndexKeyPrefix  = []byte{0x31}
 	PoolBatchWithdrawMsgStateIndexKeyPrefix = []byte{0x32}
 	PoolBatchSwapMsgStateIndexKeyPrefix     = []byte{0x33}
+	PoolDepositSuccessMsgsPrefix            = []byte{0x34}
+	PoolDepositSuccessMsgIndexPrefix        = []byte{0x35}
 )
+
+// GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
+func GetPoolDepositSuccessMsgsPrefix(poolID uint64) []byte {
+	key := make([]byte, 9)
+	key[0] = PoolDepositSuccessMsgsPrefix[0]
+	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
+	return key
+}
+
+// GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
+func GetPoolDepositSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
+	key := make([]byte, 17)
+	key[0] = PoolDepositSuccessMsgIndexPrefix[0]
+	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
+	copy(key[9:17], sdk.Uint64ToBigEndian(msgIndex))
+	return key
+}
+
+func GetPoolDepositSuccessMsgsAddressPrefix(poolID uint64, depositorAcc sdk.AccAddress) []byte {
+	key := GetPoolDepositSuccessMsgsPrefix(poolID)
+
+	key = append(key, depositorAcc.Bytes()...)
+	return key
+}
+
+func GetPoolDepositSuccessMsgAddressIndexPrefix(poolID uint64, depositorAcc sdk.AccAddress, msgIndex uint64) []byte {
+	key := GetPoolDepositSuccessMsgsPrefix(poolID)
+	key = append(key, depositorAcc.Bytes()...)
+	key = append(key, sdk.Uint64ToBigEndian(msgIndex)...)
+	return key
+}
 
 // GetPoolKey returns kv indexing key of the pool
 func GetPoolKey(poolID uint64) []byte {
