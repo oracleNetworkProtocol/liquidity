@@ -185,8 +185,81 @@ func (k Querier) PoolBatchSwapMsgs(c context.Context, req *types.QueryPoolBatchS
 	}, nil
 }
 
-func (k Querier) PoolDepositSuccessMsg(c context.Context, req *types.QueryPoolDepositSuccussMsgRequest) (*types.QueryPoolDepositSuccessMsgResponse, error) {
-	empty := &types.QueryPoolDepositSuccussMsgRequest{}
+func (k Querier) PoolSwapSuccessMsgs(c context.Context, req *types.QueryPoolSwapSuccessMsgsRequest) (*types.QueryPoolSwapSuccessMsgsResponse, error) {
+	empty := &types.QueryPoolSwapSuccessMsgsRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+	ctx := sdk.UnwrapSDKContext(c)
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+	var prefixKey []byte
+
+	if req.SwapAddress == "" {
+		prefixKey = types.GetPoolSwapSuccessMsgsPrefix(req.PoolId)
+	} else {
+		depositorAcc, err := sdk.AccAddressFromBech32(req.SwapAddress)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "invalid depositor address %s", req.SwapAddress)
+		}
+
+		prefixKey = types.GetPoolSwapSuccessMsgsAddressPrefix(req.PoolId, depositorAcc)
+	}
+
+	store := ctx.KVStore(k.storeKey)
+
+	msgStore := prefix.NewStore(store, prefixKey)
+	var msgs []types.SwapSuccessMsg
+
+	pageRes, err := query.Paginate(msgStore, req.Pagination, func(key []byte, value []byte) error {
+		msg, err := types.UnmarshalSwapSuccessMsg(k.cdc, value)
+		if err != nil {
+			return err
+		}
+
+		msgs = append(msgs, msg)
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &types.QueryPoolSwapSuccessMsgsResponse{
+		Swaps:      msgs,
+		Pagination: pageRes,
+	}, nil
+}
+
+func (k Querier) PoolSwapSuccessMsg(c context.Context, req *types.QueryPoolSwapSuccessMsgRequest) (*types.QueryPoolSwapSuccessMsgResponse, error) {
+	empty := &types.QueryPoolSwapSuccessMsgRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	msg, found := k.GetPoolSwapSuccessMsg(ctx, req.PoolId, req.MsgIndex)
+
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "the msg given msg_index %d doesn't exist", req.MsgIndex)
+	}
+
+	return &types.QueryPoolSwapSuccessMsgResponse{
+		Swap: msg,
+	}, nil
+}
+
+func (k Querier) PoolDepositSuccessMsg(c context.Context, req *types.QueryPoolDepositSuccessMsgRequest) (*types.QueryPoolDepositSuccessMsgResponse, error) {
+	empty := &types.QueryPoolDepositSuccessMsgRequest{}
 	if req == nil || *req == *empty {
 		return nil, status.Errorf(codes.InvalidArgument, "empty request")
 	}

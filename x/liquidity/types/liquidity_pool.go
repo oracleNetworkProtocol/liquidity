@@ -181,6 +181,17 @@ func MustUnmarshalWithdrawMsgState(cdc codec.BinaryMarshaler, value []byte) With
 }
 
 // MustMarshalSwapMsgState returns the SwapMsgState bytes. Panics if fails.
+func MustMarshalSwapSuccessMsg(cdc codec.BinaryMarshaler, msg SwapSuccessMsg) []byte {
+	return cdc.MustMarshalBinaryBare(&msg)
+}
+
+// UnmarshalSwapMsgState returns the UnmarshalSwapMsgState from bytes.
+func UnmarshalSwapSuccessMsg(cdc codec.BinaryMarshaler, value []byte) (msg SwapSuccessMsg, err error) {
+	err = cdc.UnmarshalBinaryBare(value, &msg)
+	return msg, err
+}
+
+// MustMarshalSwapMsgState returns the SwapMsgState bytes. Panics if fails.
 func MustMarshalSwapMsgState(cdc codec.BinaryMarshaler, msg SwapMsgState) []byte {
 	return cdc.MustMarshalBinaryBare(&msg)
 }

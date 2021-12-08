@@ -367,9 +367,9 @@ service Query {
             }
         };
     }
-
+// ==============================finish deposit msg===============================//
     // Get deposit finish messages in the pool's current by msg_index.
-    rpc PoolDepositSuccessMsg(QueryPoolDepositSuccussMsgRequest) returns (QueryPoolDepositSuccessMsgResponse) {
+    rpc PoolDepositSuccessMsg(QueryPoolDepositSuccessMsgRequest) returns (QueryPoolDepositSuccessMsgResponse) {
         option (google.api.http).get = "/cosmos/liquidity/v1beta1/pools/{pool_id}/finish/deposit/{msg_index}";
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
@@ -433,8 +433,109 @@ service Query {
 
         };
     }
+    // ==============================finish deposit msg===============================//
 
+    // ==============================finish swap msg===============================//
+    rpc PoolSwapSuccessMsg(QueryPoolSwapSuccessMsgRequest) returns (QueryPoolSwapSuccessMsgResponse) {
+        option (google.api.http).get = "/cosmos/liquidity/v1beta1/pools/{pool_id}/finish/swap/{msg_index}";
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
+            external_docs: {
+                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                description: "Find out more about the query and error codes";
+            }
+            responses: {
+                key: "500"
+                value: {
+                    description: "Internal Server Error"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":2,"message":"rpc error: code = NotFound desc = liquidity pool 3 doesn\'t exist: key not found","details":[]}'
+                    }
+                }
+            }
+            responses: {
+                key: "400"
+                value: {
+                    description: "Bad Request"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":3,"message":"type mismatch, parameter: pool_id, error: strconv.ParseUint: parsing *: invalid syntax","details":[]}'
+                    }
+                }
+            }
+
+        };
+    }
+
+    // Get all deposit finish messages in the pool's current.
+    rpc PoolSwapSuccessMsgs(QueryPoolSwapSuccessMsgsRequest) returns (QueryPoolSwapSuccessMsgsResponse) {
+        option (google.api.http).get = "/cosmos/liquidity/v1beta1/pools/{pool_id}/finish/swaps/{swap_address}";
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
+            external_docs: {
+                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                description: "Find out more about the query and error codes";
+            }
+            responses: {
+                key: "500"
+                value: {
+                    description: "Internal Server Error"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":2,"message":"rpc error: code = NotFound desc = liquidity pool 3 doesn\'t exist: key not found","details":[]}'
+                    }
+                }
+            }
+            responses: {
+                key: "400"
+                value: {
+                    description: "Bad Request"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":3,"message":"type mismatch, parameter: pool_id, error: strconv.ParseUint: parsing *: invalid syntax","details":[]}'
+                    }
+                }
+            }
+
+        };
+    }
+
+    // ==============================finish swap msg===============================//
 }
+
+// ==============================finish swap msg===============================//
+
+// the request type for the QueryPoolDepositSuccessMsgsRequest RPC method. Requestable including specified pool_id and pagination offset, limit, key.
+message QueryPoolSwapSuccessMsgsRequest {
+    // id of the target pool for query
+    uint64 pool_id = 1;
+    string swap_address = 2;
+    // pagination defines an optional pagination for the request.
+    cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+// the request type for the QueryPoolDepositSuccussMsgRequest RPC method. requestable including specified pool_id and msg_index.
+message QueryPoolSwapSuccessMsgRequest {
+    // id of the target pool for query
+    uint64 pool_id = 1;
+    // target msg_index of the pool
+    uint64 msg_index = 2;
+}
+
+// the response type for the QueryPoolBatchDeposit RPC method. This includes a list of all currently existing deposit messages of the finish and paging results that contain next_key and total count.
+message QueryPoolSwapSuccessMsgsResponse {
+    repeated SwapSuccessMsg swaps = 1 [(gogoproto.nullable) = false];
+    // pagination defines the pagination in the response. not working on this version.
+    cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// the response type for the QueryPoolDepositSuccessMsgResponse RPC method. This includes a batch swap message of the finish.
+message QueryPoolSwapSuccessMsgResponse {
+    SwapSuccessMsg swap = 1 [(gogoproto.nullable) = false];
+}
+
+// ==============================finish swap msg===============================//
 
 // ==============================finish deposit msg===============================//
 
@@ -448,7 +549,7 @@ message QueryPoolDepositSuccessMsgsRequest {
 }
 
 // the request type for the QueryPoolDepositSuccussMsgRequest RPC method. requestable including specified pool_id and msg_index.
-message QueryPoolDepositSuccussMsgRequest {
+message QueryPoolDepositSuccessMsgRequest {
     // id of the target pool for query
     uint64 pool_id = 1;
     // target msg_index of the pool

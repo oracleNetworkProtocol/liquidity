@@ -41,9 +41,125 @@ func GetQueryCmd() *cobra.Command {
 
 		GetCmdQueryPoolDepositSuccessMsg(),
 		GetCmdQueryPoolDepositSuccessMsgs(),
+		GetCmdQueryPoolSwapSuccessMsg(),
+		GetCmdQueryPoolSwapSuccessMsgs(),
 	)
 
 	return liquidityQueryCmd
+}
+
+func GetCmdQueryPoolSwapSuccessMsgs() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "swaps_finish [pool-id]",
+		Args:  cobra.ExactArgs(1),
+		Short: "Query all completed swap messages of liquidity pool",
+		Long: strings.TrimSpace(
+			fmt.Sprintf(`Query all completed swap messages of liquidity pool on the specified pool
+
+If finish messages are normally processed from the endblock, the resulting state is applied and the messages are removed in the beginning of next block.
+To query for past blocks, query the block height using the REST/gRPC API of a node that is not pruned.
+
+Example:
+$ %s query %s swaps_finish 1
+
+Example (with depositor address):
+$ %[1]s query %[2]s swaps_finish 1 --swap-address=[address]
+`,
+				version.AppName, types.ModuleName,
+			),
+		),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			pageReq, err := client.ReadPageRequest(cmd.Flags())
+			if err != nil {
+				return err
+			}
+
+			poolID, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return fmt.Errorf("pool-id %s not a valid uint, input a valid unsigned 32-bit integer pool-id", args[0])
+			}
+
+			swapAddress, _ := cmd.Flags().GetString(FlagSwapAddress)
+
+			res, err := queryClient.PoolSwapSuccessMsgs(
+				context.Background(),
+				&types.QueryPoolSwapSuccessMsgsRequest{
+					PoolId:      poolID,
+					SwapAddress: swapAddress,
+					Pagination:  pageReq,
+				},
+			)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+	cmd.Flags().AddFlagSet(flagSetSwapAddress())
+	flags.AddQueryFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func GetCmdQueryPoolSwapSuccessMsg() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "swap_finish [pool-id] [msg-index]",
+		Args:  cobra.ExactArgs(2),
+		Short: "Query all completed swap message of liquidity pool by msg index",
+		Long: strings.TrimSpace(
+			fmt.Sprintf(`Query all completed swap message of liquidity pool on the specified pool by msg index
+
+If finish messages are normally processed from the endblock, the resulting state is applied and the messages are removed in the beginning of next block.
+To query for past blocks, query the block height using the REST/gRPC API of a node that is not pruned.
+
+Example:
+$ %s query %s swap_finish 1 1
+
+`,
+				version.AppName, types.ModuleName,
+			),
+		),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+			queryClient := types.NewQueryClient(clientCtx)
+
+			poolID, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return fmt.Errorf("pool-id %s not a valid uint32, input a valid unsigned 32-bit integer pool-id", args[0])
+			}
+
+			msgIndex, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return fmt.Errorf("msg-index %s not a valid uint, input a valid unsigned 32-bit integer for msg-index", args[1])
+			}
+
+			res, err := queryClient.PoolSwapSuccessMsg(
+				context.Background(),
+				&types.QueryPoolSwapSuccessMsgRequest{
+					PoolId:   poolID,
+					MsgIndex: msgIndex,
+				},
+			)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+	flags.AddQueryFlagsToCmd(cmd)
+
+	return cmd
 }
 
 func GetCmdQueryPoolDepositSuccessMsg() *cobra.Command {
@@ -83,7 +199,7 @@ $ %s query %s deposit_finish 1 1
 
 			res, err := queryClient.PoolDepositSuccessMsg(
 				context.Background(),
-				&types.QueryPoolDepositSuccussMsgRequest{
+				&types.QueryPoolDepositSuccessMsgRequest{
 					PoolId:   poolID,
 					MsgIndex: msgIndex,
 				},

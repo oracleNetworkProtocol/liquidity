@@ -34,14 +34,48 @@ var (
 	PoolBatchDepositMsgStateIndexKeyPrefix  = []byte{0x31}
 	PoolBatchWithdrawMsgStateIndexKeyPrefix = []byte{0x32}
 	PoolBatchSwapMsgStateIndexKeyPrefix     = []byte{0x33}
-	PoolDepositSuccessMsgsPrefix            = []byte{0x34}
-	PoolDepositSuccessMsgIndexPrefix        = []byte{0x35}
+	PoolDepositSuccessMsgsKeyPrefix         = []byte{0x34}
+	PoolDepositSuccessMsgIndexKeyPrefix     = []byte{0x35}
+	PoolSwapSuccessMsgKeyPrefix             = []byte{0x36}
+	PoolSwapSuccessMsgIndexKeyPrefix        = []byte{0x37}
 )
+
+// GetPoolSwapSuccessMsgsKeyPrefix returns kv indexing key of the latest index value of the msg index
+func GetPoolSwapSuccessMsgsPrefix(poolID uint64) []byte {
+	key := make([]byte, 9)
+	key[0] = PoolSwapSuccessMsgKeyPrefix[0]
+	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
+	return key
+}
+
+func GetPoolSwapSuccessMsgsAddressPrefix(poolID uint64, depositorAcc sdk.AccAddress) []byte {
+	key := GetPoolSwapSuccessMsgsPrefix(poolID)
+
+	key = append(key, depositorAcc.Bytes()...)
+	return key
+}
+
+// GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
+func GetPoolSwapSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
+	key := make([]byte, 17)
+	key[0] = PoolSwapSuccessMsgIndexKeyPrefix[0]
+	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
+	copy(key[9:17], sdk.Uint64ToBigEndian(msgIndex))
+	return key
+}
+
+// GetPoolSwapSuccessMsgsKeyPrefix returns kv indexing key of the latest index value of the msg index
+func GetPoolSwapSuccessMsgsAddressIndexPrefix(poolID uint64, swapRequesterAddress sdk.AccAddress, msgIndex uint64) []byte {
+	key := GetPoolSwapSuccessMsgsPrefix(poolID)
+	key = append(key, swapRequesterAddress.Bytes()...)
+	key = append(key, sdk.Uint64ToBigEndian(msgIndex)...)
+	return key
+}
 
 // GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
 func GetPoolDepositSuccessMsgsPrefix(poolID uint64) []byte {
 	key := make([]byte, 9)
-	key[0] = PoolDepositSuccessMsgsPrefix[0]
+	key[0] = PoolDepositSuccessMsgsKeyPrefix[0]
 	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
 	return key
 }
@@ -49,7 +83,7 @@ func GetPoolDepositSuccessMsgsPrefix(poolID uint64) []byte {
 // GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
 func GetPoolDepositSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
 	key := make([]byte, 17)
-	key[0] = PoolDepositSuccessMsgIndexPrefix[0]
+	key[0] = PoolDepositSuccessMsgIndexKeyPrefix[0]
 	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
 	copy(key[9:17], sdk.Uint64ToBigEndian(msgIndex))
 	return key

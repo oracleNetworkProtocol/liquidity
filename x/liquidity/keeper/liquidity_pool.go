@@ -323,6 +323,7 @@ func (k Keeper) ExecuteDeposit(ctx sdk.Context, msg types.DepositMsgState, batch
 	msg.ToBeDeleted = true
 	k.SetPoolBatchDepositMsgState(ctx, msg.Msg.PoolId, msg)
 
+	//Add success msg
 	var depositeSuccessMsg = types.DepositSuccessMsg{
 		MsgHeight:        msg.MsgHeight,
 		DepositorAddress: msg.Msg.DepositorAddress,
@@ -647,7 +648,11 @@ func (k Keeper) TransactAndRefundSwapLiquidityPool(ctx sdk.Context, swapMsgState
 			outputs = append(outputs, banktypes.NewOutput(to, coins))
 		}
 	}
-	for _, sms := range swapMsgStates {
+
+	//swap success msgs
+	var swapSuccessMsgs = make([]*types.SwapSuccessMsg, len(swapMsgStates))
+
+	for key, sms := range swapMsgStates {
 		if pool.Id != sms.Msg.PoolId {
 			return fmt.Errorf("broken msg pool consistency")
 		}
@@ -662,13 +667,17 @@ func (k Keeper) TransactAndRefundSwapLiquidityPool(ctx sdk.Context, swapMsgState
 			return fmt.Errorf("consistency of OrderExpiryHeight and ToBeDeleted flag is broken")
 		}
 
+		var getCoin = sdk.Coin{}
+
 		if match, ok := matchResultMap[sms.MsgIndex]; ok {
 			transactedAmt := match.TransactedCoinAmt.TruncateInt()
 			receiveAmt := match.ExchangedDemandCoinAmt.Sub(match.ExchangedCoinFeeAmt).TruncateInt()
 			offerCoinFeeAmt := match.OfferCoinFeeAmt.TruncateInt()
 
 			sendCoin(batchEscrowAcc, poolReserveAcc, sdk.NewCoin(sms.Msg.OfferCoin.Denom, transactedAmt))
-			sendCoin(poolReserveAcc, sms.Msg.GetSwapRequester(), sdk.NewCoin(sms.Msg.DemandCoinDenom, receiveAmt))
+			getCoin = sdk.NewCoin(sms.Msg.DemandCoinDenom, receiveAmt)
+			sendCoin(poolReserveAcc, sms.Msg.GetSwapRequester(), getCoin)
+
 			sendCoin(batchEscrowAcc, poolReserveAcc, sdk.NewCoin(sms.Msg.OfferCoin.Denom, offerCoinFeeAmt))
 
 			if sms.RemainingOfferCoin.IsPositive() && sms.OrderExpiryHeight == ctx.BlockHeight() {
@@ -730,11 +739,24 @@ func (k Keeper) TransactAndRefundSwapLiquidityPool(ctx sdk.Context, swapMsgState
 				))
 
 		}
+
+		swapSuccessMsgs[key] = &types.SwapSuccessMsg{
+			MsgHeight:            sms.MsgHeight,
+			MsgIndex:             sms.MsgIndex,
+			ExchangedOfferCoin:   sms.ExchangedOfferCoin,
+			RemainingOfferCoin:   sms.RemainingOfferCoin,
+			ReservedOfferCoinFee: sms.ReservedOfferCoinFee,
+			SwapPrice:            batchResult.SwapPrice,
+			GetCoin:              getCoin,
+			Msg:                  sms.Msg,
+		}
 	}
+
 	if err := k.bankKeeper.InputOutputCoins(ctx, inputs, outputs); err != nil {
 		return err
 	}
 	k.SetPoolBatchSwapMsgStatesByPointer(ctx, pool.Id, swapMsgStates)
+	k.SetPoolSwapSuccessMsg(ctx, pool.Id, swapSuccessMsgs)
 	return nil
 }
 
