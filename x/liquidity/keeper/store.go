@@ -272,6 +272,41 @@ func (k Keeper) GetPoolSwapSuccessMsg(ctx sdk.Context, poolID, msgIndex uint64) 
 	return msg, true
 }
 
+func (k Keeper) SetPoolWithdrawSuccessMsg(ctx sdk.Context, poolID uint64, withdrawAcc sdk.AccAddress, msg types.WithdrawSuccessMsg) {
+	store := ctx.KVStore(k.storeKey)
+	b := types.MustMarshalWithdrawSuccessMsg(k.cdc, msg)
+
+	prefixKey := types.GetPoolWithdrawSuccessMsgsAddressIndexPrefix(poolID, withdrawAcc, msg.MsgIndex)
+	store.Set(types.GetPoolWithdrawSuccessMsgIndexPrefix(poolID, msg.MsgIndex), prefixKey)
+	store.Set(prefixKey, b)
+}
+
+func (k Keeper) GetPoolWithdrawSuccessMsg(ctx sdk.Context, poolID, msgIndex uint64) (msg types.WithdrawSuccessMsg, found bool) {
+	store := ctx.KVStore(k.storeKey)
+
+	prefix := types.GetPoolWithdrawSuccessMsgIndexPrefix(poolID, msgIndex)
+
+	resultPrefix := store.Get(prefix)
+
+	if resultPrefix == nil {
+		return msg, false
+	}
+
+	result := store.Get(resultPrefix)
+
+	if result == nil {
+		return msg, false
+	}
+
+	msg, err := types.UnmarshalWithdrawSuccessMsg(k.cdc, result)
+
+	if err != nil {
+		return msg, false
+	}
+
+	return msg, true
+}
+
 // SetPoolDepositSuccessMsg sets deposit msg state of the pool batch, with current state
 func (k Keeper) SetPoolDepositSuccessMsg(ctx sdk.Context, poolID uint64, depositorAcc sdk.AccAddress, msg types.DepositSuccessMsg) {
 	store := ctx.KVStore(k.storeKey)

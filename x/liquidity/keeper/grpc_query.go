@@ -200,12 +200,12 @@ func (k Querier) PoolSwapSuccessMsgs(c context.Context, req *types.QueryPoolSwap
 	if req.SwapAddress == "" {
 		prefixKey = types.GetPoolSwapSuccessMsgsPrefix(req.PoolId)
 	} else {
-		depositorAcc, err := sdk.AccAddressFromBech32(req.SwapAddress)
+		swapAcc, err := sdk.AccAddressFromBech32(req.SwapAddress)
 		if err != nil {
-			return nil, status.Errorf(codes.InvalidArgument, "invalid depositor address %s", req.SwapAddress)
+			return nil, status.Errorf(codes.InvalidArgument, "invalid swap address %s", req.SwapAddress)
 		}
 
-		prefixKey = types.GetPoolSwapSuccessMsgsAddressPrefix(req.PoolId, depositorAcc)
+		prefixKey = types.GetPoolSwapSuccessMsgsAddressPrefix(req.PoolId, swapAcc)
 	}
 
 	store := ctx.KVStore(k.storeKey)
@@ -255,6 +255,82 @@ func (k Querier) PoolSwapSuccessMsg(c context.Context, req *types.QueryPoolSwapS
 
 	return &types.QueryPoolSwapSuccessMsgResponse{
 		Swap: msg,
+	}, nil
+}
+
+func (k Querier) PoolWithdrawSuccessMsg(c context.Context, req *types.QueryPoolWithdrawSuccessMsgRequest) (*types.QueryPoolWithdrawSuccessMsgResponse, error) {
+	empty := &types.QueryPoolWithdrawSuccessMsgRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	msg, found := k.GetPoolWithdrawSuccessMsg(ctx, req.PoolId, req.MsgIndex)
+
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "the msg given msg_index %d doesn't exist", req.MsgIndex)
+	}
+
+	return &types.QueryPoolWithdrawSuccessMsgResponse{
+		Withdraw: msg,
+	}, nil
+}
+
+func (k Querier) PoolWithdrawSuccessMsgs(c context.Context, req *types.QueryPoolWithdrawSuccessMsgsRequest) (*types.QueryPoolWithdrawSuccessMsgsResponse, error) {
+	empty := &types.QueryPoolWithdrawSuccessMsgsRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	store := ctx.KVStore(k.storeKey)
+
+	var prefixKey []byte
+
+	if req.WithdrawAddress == "" {
+		prefixKey = types.GetPoolWithdrawSuccessMsgsPrefix(req.PoolId)
+	} else {
+		withdrawAcc, err := sdk.AccAddressFromBech32(req.WithdrawAddress)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "invalid withdraw address %s", req.WithdrawAddress)
+		}
+
+		prefixKey = types.GetPoolWithdrawSuccessMsgsAddressPrefix(req.PoolId, withdrawAcc)
+	}
+
+	msgStore := prefix.NewStore(store, prefixKey)
+	var msgs []types.WithdrawSuccessMsg
+
+	pageRes, err := query.Paginate(msgStore, req.Pagination, func(key []byte, value []byte) error {
+		msg, err := types.UnmarshalWithdrawSuccessMsg(k.cdc, value)
+		if err != nil {
+			return err
+		}
+
+		msgs = append(msgs, msg)
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &types.QueryPoolWithdrawSuccessMsgsResponse{
+		Withdraws:  msgs,
+		Pagination: pageRes,
 	}, nil
 }
 

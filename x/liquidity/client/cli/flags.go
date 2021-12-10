@@ -11,6 +11,7 @@ const (
 	FlagReserveAcc       = "reserve-acc"
 	FlagDepositorAddress = "depositor-address"
 	FlagSwapAddress      = "swap-address"
+	FlagWithdrawAddress  = "withdraw-address"
 )
 
 func flagSetPool() *flag.FlagSet {
@@ -19,6 +20,12 @@ func flagSetPool() *flag.FlagSet {
 	fs.String(FlagPoolCoinDenom, "", "The denomination of the pool coin")
 	fs.String(FlagReserveAcc, "", "The Bech32 address of the reserve account")
 
+	return fs
+}
+
+func flagSetWithdrawAddress() *flag.FlagSet {
+	fs := flag.NewFlagSet("", flag.ContinueOnError)
+	fs.String(FlagWithdrawAddress, "", "The Bech32 address of the swap account")
 	return fs
 }
 

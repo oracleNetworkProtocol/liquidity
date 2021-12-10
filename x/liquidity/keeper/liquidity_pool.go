@@ -446,6 +446,16 @@ func (k Keeper) ExecuteWithdrawal(ctx sdk.Context, msg types.WithdrawMsgState, b
 	msg.ToBeDeleted = true
 	k.SetPoolBatchWithdrawMsgState(ctx, msg.Msg.PoolId, msg)
 
+	var withdrawSuccessMsg = types.WithdrawSuccessMsg{
+		MsgHeight:        msg.MsgHeight,
+		MsgIndex:         msg.MsgIndex,
+		WithdrawCoins:    withdrawCoins,
+		WithdrawFeeCoins: withdrawFeeCoins,
+		Msg:              msg.Msg,
+	}
+
+	k.SetPoolWithdrawSuccessMsg(ctx, msg.Msg.PoolId, withdrawer, withdrawSuccessMsg)
+
 	if BatchLogicInvariantCheckFlag {
 		afterPoolCoinTotalSupply := k.GetPoolCoinTotalSupply(ctx, pool)
 		afterReserveCoins := k.GetReserveCoins(ctx, pool)

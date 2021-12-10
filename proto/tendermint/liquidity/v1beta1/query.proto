@@ -502,7 +502,108 @@ service Query {
     }
 
     // ==============================finish swap msg===============================//
+
+    // ==============================finish withdraw msg===============================//
+    rpc PoolWithdrawSuccessMsg(QueryPoolWithdrawSuccessMsgRequest) returns (QueryPoolWithdrawSuccessMsgResponse) {
+        option (google.api.http).get = "/cosmos/liquidity/v1beta1/pools/{pool_id}/finish/withdraw/{msg_index}";
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
+            external_docs: {
+                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                description: "Find out more about the query and error codes";
+            }
+            responses: {
+                key: "500"
+                value: {
+                    description: "Internal Server Error"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":2,"message":"rpc error: code = NotFound desc = liquidity pool 3 doesn\'t exist: key not found","details":[]}'
+                    }
+                }
+            }
+            responses: {
+                key: "400"
+                value: {
+                    description: "Bad Request"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":3,"message":"type mismatch, parameter: pool_id, error: strconv.ParseUint: parsing *: invalid syntax","details":[]}'
+                    }
+                }
+            }
+
+        };
+    }
+
+    // Get all deposit finish messages in the pool's current.
+    rpc PoolWithdrawSuccessMsgs(QueryPoolWithdrawSuccessMsgsRequest) returns (QueryPoolWithdrawSuccessMsgsResponse) {
+        option (google.api.http).get = "/cosmos/liquidity/v1beta1/pools/{pool_id}/finish/withdraws/{withdraw_address}";
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
+            external_docs: {
+                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                description: "Find out more about the query and error codes";
+            }
+            responses: {
+                key: "500"
+                value: {
+                    description: "Internal Server Error"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":2,"message":"rpc error: code = NotFound desc = liquidity pool 3 doesn\'t exist: key not found","details":[]}'
+                    }
+                }
+            }
+            responses: {
+                key: "400"
+                value: {
+                    description: "Bad Request"
+                    examples: {
+                        key: "application/json"
+                        value: '{"code":3,"message":"type mismatch, parameter: pool_id, error: strconv.ParseUint: parsing *: invalid syntax","details":[]}'
+                    }
+                }
+            }
+
+        };
+    }
+
+    // ==============================finish withdraw msg===============================//
 }
+
+// ==============================finish withdraw msg===============================//
+// the request type for the QueryPoolDepositSuccessMsgsRequest RPC method. Requestable including specified pool_id and pagination offset, limit, key.
+message QueryPoolWithdrawSuccessMsgsRequest {
+    // id of the target pool for query
+    uint64 pool_id = 1;
+    string withdraw_address = 2;
+    // pagination defines an optional pagination for the request.
+    cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+// the request type for the QueryPoolDepositSuccussMsgRequest RPC method. requestable including specified pool_id and msg_index.
+message QueryPoolWithdrawSuccessMsgRequest {
+    // id of the target pool for query
+    uint64 pool_id = 1;
+    // target msg_index of the pool
+    uint64 msg_index = 2;
+}
+
+// the response type for the QueryPoolBatchDeposit RPC method. This includes a list of all currently existing deposit messages of the finish and paging results that contain next_key and total count.
+message QueryPoolWithdrawSuccessMsgsResponse {
+    repeated WithdrawSuccessMsg withdraws = 1 [(gogoproto.nullable) = false];
+    // pagination defines the pagination in the response. not working on this version.
+    cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// the response type for the QueryPoolDepositSuccessMsgResponse RPC method. This includes a batch swap message of the finish.
+message QueryPoolWithdrawSuccessMsgResponse {
+    WithdrawSuccessMsg withdraw = 1 [(gogoproto.nullable) = false];
+}
+
+// ==============================finish withdraw msg===============================//
+
 
 // ==============================finish swap msg===============================//
 

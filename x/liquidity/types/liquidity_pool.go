@@ -171,6 +171,17 @@ func UnmarshalWithdrawMsgState(cdc codec.BinaryMarshaler, value []byte) (msg Wit
 	return msg, err
 }
 
+// MustMarshalWithdrawSuccessMsg returns the WithdrawMsgState bytes. Panics if fails.
+func MustMarshalWithdrawSuccessMsg(cdc codec.BinaryMarshaler, msg WithdrawSuccessMsg) []byte {
+	return cdc.MustMarshalBinaryBare(&msg)
+}
+
+// UnmarshalWithdrawMsgState returns the WithdrawMsgState from bytes.
+func UnmarshalWithdrawSuccessMsg(cdc codec.BinaryMarshaler, value []byte) (msg WithdrawSuccessMsg, err error) {
+	err = cdc.UnmarshalBinaryBare(value, &msg)
+	return msg, err
+}
+
 // MustUnmarshalWithdrawMsgState returns the WithdrawMsgState from bytes. Panics if fails.
 func MustUnmarshalWithdrawMsgState(cdc codec.BinaryMarshaler, value []byte) WithdrawMsgState {
 	msg, err := UnmarshalWithdrawMsgState(cdc, value)

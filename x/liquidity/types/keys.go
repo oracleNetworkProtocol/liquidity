@@ -38,7 +38,41 @@ var (
 	PoolDepositSuccessMsgIndexKeyPrefix     = []byte{0x35}
 	PoolSwapSuccessMsgKeyPrefix             = []byte{0x36}
 	PoolSwapSuccessMsgIndexKeyPrefix        = []byte{0x37}
+	PoolWithdrawSuccessMsgKeyPrefix         = []byte{0x38}
+	PoolWithdrawSuccessMsgIndexKeyPrefix    = []byte{0x39}
 )
+
+// GetPoolWithdrawSuccessMsgsPrefix returns kv indexing key of the latest index value of the msg index
+func GetPoolWithdrawSuccessMsgsPrefix(poolID uint64) []byte {
+	key := make([]byte, 9)
+	key[0] = PoolWithdrawSuccessMsgKeyPrefix[0]
+	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
+	return key
+}
+
+func GetPoolWithdrawSuccessMsgsAddressPrefix(poolID uint64, withdrawAcc sdk.AccAddress) []byte {
+	key := GetPoolWithdrawSuccessMsgsPrefix(poolID)
+
+	key = append(key, withdrawAcc.Bytes()...)
+	return key
+}
+
+// GetPoolWithdrawSuccessMsgIndexPrefix returns prefix of deposit success message in the pool's
+func GetPoolWithdrawSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
+	key := make([]byte, 17)
+	key[0] = PoolWithdrawSuccessMsgIndexKeyPrefix[0]
+	copy(key[1:9], sdk.Uint64ToBigEndian(poolID))
+	copy(key[9:17], sdk.Uint64ToBigEndian(msgIndex))
+	return key
+}
+
+// GetPoolWithdrawSuccessMsgsAddressIndexPrefix returns kv indexing key of the latest index value of the msg index
+func GetPoolWithdrawSuccessMsgsAddressIndexPrefix(poolID uint64, withdrawAcc sdk.AccAddress, msgIndex uint64) []byte {
+	key := GetPoolWithdrawSuccessMsgsPrefix(poolID)
+	key = append(key, withdrawAcc.Bytes()...)
+	key = append(key, sdk.Uint64ToBigEndian(msgIndex)...)
+	return key
+}
 
 // GetPoolSwapSuccessMsgsKeyPrefix returns kv indexing key of the latest index value of the msg index
 func GetPoolSwapSuccessMsgsPrefix(poolID uint64) []byte {
@@ -48,10 +82,10 @@ func GetPoolSwapSuccessMsgsPrefix(poolID uint64) []byte {
 	return key
 }
 
-func GetPoolSwapSuccessMsgsAddressPrefix(poolID uint64, depositorAcc sdk.AccAddress) []byte {
+func GetPoolSwapSuccessMsgsAddressPrefix(poolID uint64, swapRequesterAcc sdk.AccAddress) []byte {
 	key := GetPoolSwapSuccessMsgsPrefix(poolID)
 
-	key = append(key, depositorAcc.Bytes()...)
+	key = append(key, swapRequesterAcc.Bytes()...)
 	return key
 }
 
@@ -65,9 +99,9 @@ func GetPoolSwapSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
 }
 
 // GetPoolSwapSuccessMsgsKeyPrefix returns kv indexing key of the latest index value of the msg index
-func GetPoolSwapSuccessMsgsAddressIndexPrefix(poolID uint64, swapRequesterAddress sdk.AccAddress, msgIndex uint64) []byte {
+func GetPoolSwapSuccessMsgsAddressIndexPrefix(poolID uint64, swapRequesterAcc sdk.AccAddress, msgIndex uint64) []byte {
 	key := GetPoolSwapSuccessMsgsPrefix(poolID)
-	key = append(key, swapRequesterAddress.Bytes()...)
+	key = append(key, swapRequesterAcc.Bytes()...)
 	key = append(key, sdk.Uint64ToBigEndian(msgIndex)...)
 	return key
 }
