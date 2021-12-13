@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"fmt"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	gogotypes "github.com/gogo/protobuf/types"
 
@@ -193,6 +195,125 @@ func (k Keeper) GetPoolBatchDepositMsgState(ctx sdk.Context, poolID, msgIndex ui
 
 	state = types.MustUnmarshalDepositMsgState(k.cdc, value)
 	return state, true
+}
+
+// set swap msgs of the liquidity pool, with current state using pointers
+func (k Keeper) SetPoolSwapSuccessMsg(ctx sdk.Context, poolID uint64, msgs []*types.SwapSuccessMsg) {
+	store := ctx.KVStore(k.storeKey)
+	for _, msg := range msgs {
+		if poolID != msg.Msg.PoolId {
+			continue
+		}
+		swapRequesterAcc, err := sdk.AccAddressFromBech32(msg.Msg.SwapRequesterAddress)
+		if err != nil {
+			continue
+		}
+		b := types.MustMarshalSwapSuccessMsg(k.cdc, *msg)
+		prefixKey := types.GetPoolSwapSuccessMsgsAddressIndexPrefix(poolID, swapRequesterAcc, msg.MsgIndex)
+		store.Set(types.GetPoolSwapSuccessMsgIndexPrefix(poolID, msg.MsgIndex), prefixKey)
+		store.Set(prefixKey, b)
+
+		dataByte := store.Get(prefixKey)
+		data, _ := types.UnmarshalSwapSuccessMsg(k.cdc, dataByte)
+		fmt.Printf("%+v", data)
+	}
+}
+
+func (k Keeper) GetPoolSwapSuccessMsg(ctx sdk.Context, poolID, msgIndex uint64) (msg types.SwapSuccessMsg, found bool) {
+	store := ctx.KVStore(k.storeKey)
+
+	prefix := types.GetPoolSwapSuccessMsgIndexPrefix(poolID, msgIndex)
+
+	resultPrefix := store.Get(prefix)
+
+	if resultPrefix == nil {
+		return msg, false
+	}
+
+	result := store.Get(resultPrefix)
+
+	if result == nil {
+		return msg, false
+	}
+
+	msg, err := types.UnmarshalSwapSuccessMsg(k.cdc, result)
+
+	if err != nil {
+		return msg, false
+	}
+
+	return msg, true
+}
+
+func (k Keeper) SetPoolWithdrawSuccessMsg(ctx sdk.Context, poolID uint64, withdrawAcc sdk.AccAddress, msg types.WithdrawSuccessMsg) {
+	store := ctx.KVStore(k.storeKey)
+	b := types.MustMarshalWithdrawSuccessMsg(k.cdc, msg)
+
+	prefixKey := types.GetPoolWithdrawSuccessMsgsAddressIndexPrefix(poolID, withdrawAcc, msg.MsgIndex)
+	store.Set(types.GetPoolWithdrawSuccessMsgIndexPrefix(poolID, msg.MsgIndex), prefixKey)
+	store.Set(prefixKey, b)
+}
+
+func (k Keeper) GetPoolWithdrawSuccessMsg(ctx sdk.Context, poolID, msgIndex uint64) (msg types.WithdrawSuccessMsg, found bool) {
+	store := ctx.KVStore(k.storeKey)
+
+	prefix := types.GetPoolWithdrawSuccessMsgIndexPrefix(poolID, msgIndex)
+
+	resultPrefix := store.Get(prefix)
+
+	if resultPrefix == nil {
+		return msg, false
+	}
+
+	result := store.Get(resultPrefix)
+
+	if result == nil {
+		return msg, false
+	}
+
+	msg, err := types.UnmarshalWithdrawSuccessMsg(k.cdc, result)
+
+	if err != nil {
+		return msg, false
+	}
+
+	return msg, true
+}
+
+// SetPoolDepositSuccessMsg sets deposit msg state of the pool batch, with current state
+func (k Keeper) SetPoolDepositSuccessMsg(ctx sdk.Context, poolID uint64, depositorAcc sdk.AccAddress, msg types.DepositSuccessMsg) {
+	store := ctx.KVStore(k.storeKey)
+	b := types.MustMarshalDepositSuccessMsg(k.cdc, msg)
+
+	prefixKey := types.GetPoolDepositSuccessMsgAddressIndexPrefix(poolID, depositorAcc, msg.MsgIndex)
+	store.Set(types.GetPoolDepositSuccessMsgIndexPrefix(poolID, msg.MsgIndex), prefixKey)
+	store.Set(prefixKey, b)
+}
+
+func (k Keeper) GetPoolDepositSuccessMsg(ctx sdk.Context, poolID, msgIndex uint64) (msg types.DepositSuccessMsg, found bool) {
+	store := ctx.KVStore(k.storeKey)
+
+	prefix := types.GetPoolDepositSuccessMsgIndexPrefix(poolID, msgIndex)
+
+	resultPrefix := store.Get(prefix)
+
+	if resultPrefix == nil {
+		return msg, false
+	}
+
+	result := store.Get(resultPrefix)
+
+	if result == nil {
+		return msg, false
+	}
+
+	msg, err := types.UnmarshalDepositSuccessMsg(k.cdc, result)
+
+	if err != nil {
+		return msg, false
+	}
+
+	return msg, true
 }
 
 // SetPoolBatchDepositMsgState sets deposit msg state of the pool batch, with current state

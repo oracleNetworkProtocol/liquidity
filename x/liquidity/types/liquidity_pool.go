@@ -130,6 +130,17 @@ func MustUnmarshalPoolBatch(cdc codec.BinaryCodec, value []byte) PoolBatch {
 }
 
 // MustMarshalDepositMsgState returns the DepositMsgState bytes. Panics if fails.
+func MustMarshalDepositSuccessMsg(cdc codec.BinaryCodec, msg DepositSuccessMsg) []byte {
+	return cdc.MustMarshal(&msg)
+}
+
+// UnmarshalDepositMsgState returns the DepositMsgState from bytes.
+func UnmarshalDepositSuccessMsg(cdc codec.BinaryCodec, value []byte) (msg DepositSuccessMsg, err error) {
+	err = cdc.Unmarshal(value, &msg)
+	return msg, err
+}
+
+// MustMarshalDepositMsgState returns the DepositMsgState bytes. Panics if fails.
 func MustMarshalDepositMsgState(cdc codec.BinaryCodec, msg DepositMsgState) []byte {
 	return cdc.MustMarshal(&msg)
 }
@@ -160,6 +171,17 @@ func UnmarshalWithdrawMsgState(cdc codec.BinaryCodec, value []byte) (msg Withdra
 	return msg, err
 }
 
+// MustMarshalWithdrawSuccessMsg returns the WithdrawMsgState bytes. Panics if fails.
+func MustMarshalWithdrawSuccessMsg(cdc codec.BinaryCodec, msg WithdrawSuccessMsg) []byte {
+	return cdc.MustMarshal(&msg)
+}
+
+// UnmarshalWithdrawMsgState returns the WithdrawMsgState from bytes.
+func UnmarshalWithdrawSuccessMsg(cdc codec.BinaryCodec, value []byte) (msg WithdrawSuccessMsg, err error) {
+	err = cdc.Unmarshal(value, &msg)
+	return msg, err
+}
+
 // MustUnmarshalWithdrawMsgState returns the WithdrawMsgState from bytes. Panics if fails.
 func MustUnmarshalWithdrawMsgState(cdc codec.BinaryCodec, value []byte) WithdrawMsgState {
 	msg, err := UnmarshalWithdrawMsgState(cdc, value)
@@ -167,6 +189,17 @@ func MustUnmarshalWithdrawMsgState(cdc codec.BinaryCodec, value []byte) Withdraw
 		panic(err)
 	}
 	return msg
+}
+
+// MustMarshalSwapMsgState returns the SwapMsgState bytes. Panics if fails.
+func MustMarshalSwapSuccessMsg(cdc codec.BinaryCodec, msg SwapSuccessMsg) []byte {
+	return cdc.MustMarshal(&msg)
+}
+
+// UnmarshalSwapMsgState returns the UnmarshalSwapMsgState from bytes.
+func UnmarshalSwapSuccessMsg(cdc codec.BinaryCodec, value []byte) (msg SwapSuccessMsg, err error) {
+	err = cdc.Unmarshal(value, &msg)
+	return msg, err
 }
 
 // MustMarshalSwapMsgState returns the SwapMsgState bytes. Panics if fails.

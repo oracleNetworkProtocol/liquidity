@@ -185,6 +185,232 @@ func (k Querier) PoolBatchSwapMsgs(c context.Context, req *types.QueryPoolBatchS
 	}, nil
 }
 
+func (k Querier) PoolSwapSuccessMsgs(c context.Context, req *types.QueryPoolSwapSuccessMsgsRequest) (*types.QueryPoolSwapSuccessMsgsResponse, error) {
+	empty := &types.QueryPoolSwapSuccessMsgsRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+	ctx := sdk.UnwrapSDKContext(c)
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+	var prefixKey []byte
+
+	if req.SwapAddress == "" {
+		prefixKey = types.GetPoolSwapSuccessMsgsPrefix(req.PoolId)
+	} else {
+		swapAcc, err := sdk.AccAddressFromBech32(req.SwapAddress)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "invalid swap address %s", req.SwapAddress)
+		}
+
+		prefixKey = types.GetPoolSwapSuccessMsgsAddressPrefix(req.PoolId, swapAcc)
+	}
+
+	store := ctx.KVStore(k.storeKey)
+
+	msgStore := prefix.NewStore(store, prefixKey)
+	var msgs []types.SwapSuccessMsg
+
+	pageRes, err := query.Paginate(msgStore, req.Pagination, func(key []byte, value []byte) error {
+		msg, err := types.UnmarshalSwapSuccessMsg(k.cdc, value)
+		if err != nil {
+			return err
+		}
+
+		msgs = append(msgs, msg)
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &types.QueryPoolSwapSuccessMsgsResponse{
+		Swaps:      msgs,
+		Pagination: pageRes,
+	}, nil
+}
+
+func (k Querier) PoolSwapSuccessMsg(c context.Context, req *types.QueryPoolSwapSuccessMsgRequest) (*types.QueryPoolSwapSuccessMsgResponse, error) {
+	empty := &types.QueryPoolSwapSuccessMsgRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	msg, found := k.GetPoolSwapSuccessMsg(ctx, req.PoolId, req.MsgIndex)
+
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "the msg given msg_index %d doesn't exist", req.MsgIndex)
+	}
+
+	return &types.QueryPoolSwapSuccessMsgResponse{
+		Swap: msg,
+	}, nil
+}
+
+func (k Querier) PoolWithdrawSuccessMsg(c context.Context, req *types.QueryPoolWithdrawSuccessMsgRequest) (*types.QueryPoolWithdrawSuccessMsgResponse, error) {
+	empty := &types.QueryPoolWithdrawSuccessMsgRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	msg, found := k.GetPoolWithdrawSuccessMsg(ctx, req.PoolId, req.MsgIndex)
+
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "the msg given msg_index %d doesn't exist", req.MsgIndex)
+	}
+
+	return &types.QueryPoolWithdrawSuccessMsgResponse{
+		Withdraw: msg,
+	}, nil
+}
+
+func (k Querier) PoolWithdrawSuccessMsgs(c context.Context, req *types.QueryPoolWithdrawSuccessMsgsRequest) (*types.QueryPoolWithdrawSuccessMsgsResponse, error) {
+	empty := &types.QueryPoolWithdrawSuccessMsgsRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	store := ctx.KVStore(k.storeKey)
+
+	var prefixKey []byte
+
+	if req.WithdrawAddress == "" {
+		prefixKey = types.GetPoolWithdrawSuccessMsgsPrefix(req.PoolId)
+	} else {
+		withdrawAcc, err := sdk.AccAddressFromBech32(req.WithdrawAddress)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "invalid withdraw address %s", req.WithdrawAddress)
+		}
+
+		prefixKey = types.GetPoolWithdrawSuccessMsgsAddressPrefix(req.PoolId, withdrawAcc)
+	}
+
+	msgStore := prefix.NewStore(store, prefixKey)
+	var msgs []types.WithdrawSuccessMsg
+
+	pageRes, err := query.Paginate(msgStore, req.Pagination, func(key []byte, value []byte) error {
+		msg, err := types.UnmarshalWithdrawSuccessMsg(k.cdc, value)
+		if err != nil {
+			return err
+		}
+
+		msgs = append(msgs, msg)
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &types.QueryPoolWithdrawSuccessMsgsResponse{
+		Withdraws:  msgs,
+		Pagination: pageRes,
+	}, nil
+}
+
+func (k Querier) PoolDepositSuccessMsg(c context.Context, req *types.QueryPoolDepositSuccessMsgRequest) (*types.QueryPoolDepositSuccessMsgResponse, error) {
+	empty := &types.QueryPoolDepositSuccessMsgRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	msg, found := k.GetPoolDepositSuccessMsg(ctx, req.PoolId, req.MsgIndex)
+
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "the msg given msg_index %d doesn't exist", req.MsgIndex)
+	}
+
+	return &types.QueryPoolDepositSuccessMsgResponse{
+		Deposit: msg,
+	}, nil
+
+}
+
+func (k Querier) PoolDepositSuccessMsgs(c context.Context, req *types.QueryPoolDepositSuccessMsgsRequest) (*types.QueryPoolDepositSuccessMsgsResponse, error) {
+	empty := &types.QueryPoolDepositSuccessMsgsRequest{}
+	if req == nil || *req == *empty {
+		return nil, status.Errorf(codes.InvalidArgument, "empty request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(c)
+
+	_, found := k.GetPool(ctx, req.PoolId)
+	if !found {
+		return nil, status.Errorf(codes.NotFound, "liquidity pool %d doesn't exist", req.PoolId)
+	}
+
+	store := ctx.KVStore(k.storeKey)
+
+	var prefixKey []byte
+
+	if req.DepositorAddress == "" {
+		prefixKey = types.GetPoolDepositSuccessMsgsPrefix(req.PoolId)
+	} else {
+		depositorAcc, err := sdk.AccAddressFromBech32(req.DepositorAddress)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "invalid depositor address %s", req.DepositorAddress)
+		}
+
+		prefixKey = types.GetPoolDepositSuccessMsgsAddressPrefix(req.PoolId, depositorAcc)
+	}
+
+	msgStore := prefix.NewStore(store, prefixKey)
+	var msgs []types.DepositSuccessMsg
+
+	pageRes, err := query.Paginate(msgStore, req.Pagination, func(key []byte, value []byte) error {
+		msg, err := types.UnmarshalDepositSuccessMsg(k.cdc, value)
+		if err != nil {
+			return err
+		}
+
+		msgs = append(msgs, msg)
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &types.QueryPoolDepositSuccessMsgsResponse{
+		Deposits:   msgs,
+		Pagination: pageRes,
+	}, nil
+}
+
 // PoolBatchDepositMsg queries the pool batch deposit message with the msg_index of the liquidity pool.
 func (k Querier) PoolBatchDepositMsg(c context.Context, req *types.QueryPoolBatchDepositMsgRequest) (*types.QueryPoolBatchDepositMsgResponse, error) {
 	empty := &types.QueryPoolBatchDepositMsgRequest{}
