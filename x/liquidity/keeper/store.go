@@ -224,7 +224,7 @@ func (k Keeper) GetPoolBatchDepositMsgState(ctx sdk.Context, poolID, msgIndex ui
 	return state, true
 }
 
-// set swap batch msgs of the liquidity pool batch, with current state using pointers
+// set swap msgs of the liquidity pool, with current state using pointers
 func (k Keeper) SetPoolSwapSuccessMsg(ctx sdk.Context, poolID uint64, msgs []*types.SwapSuccessMsg) {
 	store := ctx.KVStore(k.storeKey)
 	for _, msg := range msgs {

@@ -74,7 +74,7 @@ func GetPoolWithdrawSuccessMsgsAddressIndexPrefix(poolID uint64, withdrawAcc sdk
 	return key
 }
 
-// GetPoolSwapSuccessMsgsKeyPrefix returns kv indexing key of the latest index value of the msg index
+// GetPoolSwapSuccessMsgsPrefix returns kv indexing key of the latest index value of the msg index
 func GetPoolSwapSuccessMsgsPrefix(poolID uint64) []byte {
 	key := make([]byte, 9)
 	key[0] = PoolSwapSuccessMsgKeyPrefix[0]
@@ -89,7 +89,7 @@ func GetPoolSwapSuccessMsgsAddressPrefix(poolID uint64, swapRequesterAcc sdk.Acc
 	return key
 }
 
-// GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
+// GetPoolSwapSuccessMsgIndexPrefix returns swap of deposit success message in the pool's
 func GetPoolSwapSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
 	key := make([]byte, 17)
 	key[0] = PoolSwapSuccessMsgIndexKeyPrefix[0]
@@ -106,7 +106,7 @@ func GetPoolSwapSuccessMsgsAddressIndexPrefix(poolID uint64, swapRequesterAcc sd
 	return key
 }
 
-// GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
+// GetPoolDepositSuccessMsgsPrefix returns prefix of deposit success message in the pool's
 func GetPoolDepositSuccessMsgsPrefix(poolID uint64) []byte {
 	key := make([]byte, 9)
 	key[0] = PoolDepositSuccessMsgsKeyPrefix[0]
@@ -114,7 +114,7 @@ func GetPoolDepositSuccessMsgsPrefix(poolID uint64) []byte {
 	return key
 }
 
-// GetPoolDepositSuccessMsgPrefix returns prefix of deposit success message in the pool's
+// GetPoolDepositSuccessMsgIndexPrefix returns prefix of deposit success message in the pool's
 func GetPoolDepositSuccessMsgIndexPrefix(poolID, msgIndex uint64) []byte {
 	key := make([]byte, 17)
 	key[0] = PoolDepositSuccessMsgIndexKeyPrefix[0]

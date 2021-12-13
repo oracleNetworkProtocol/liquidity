@@ -427,14 +427,14 @@ message SwapSuccessMsg {
     option (gogoproto.equal)           = false;
     option (gogoproto.goproto_getters) = false;
 
-    // height where this message is appended to the success deposit 
+    // height where this message is appended to the success swap 
     int64 msg_height = 1 [(gogoproto.moretags) = "yaml:\"msg_height\"",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
         example: "\"1000\"",
         format: "int64"
     }];
 
-    // index of this deposit message in this liquidity pool
+    // index of this swap message in this liquidity pool
     uint64 msg_index = 2 [(gogoproto.moretags) = "yaml:\"msg_index\"",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
         example: "\"1\"",
@@ -560,7 +560,7 @@ message DepositSuccessMsg {
   }
 
 
-  // WithdrawSuccessMsg defines the state of the withdraw message that contains state information as the message is processed in the next batch or batches.
+  // WithdrawSuccessMsg withdraw success record.
 message WithdrawSuccessMsg {
 
     // height where this message is appended to the batch
@@ -577,7 +577,7 @@ message WithdrawSuccessMsg {
             format: "uint64"
         }];
 
-    // Successfully deposit quantity
+    // Successfully withdraw quantity
     repeated cosmos.base.v1beta1.Coin withdraw_coins = 3 [
       (gogoproto.nullable) = false,
       (gogoproto.moretags) = "yaml:\"withdraw_coins\"",
@@ -587,7 +587,7 @@ message WithdrawSuccessMsg {
         format: "sdk.Coins"
       }];
 
-    // Successfully deposit quantity
+    // Successfully withdraw quantity
     repeated cosmos.base.v1beta1.Coin withdraw_fee_coins = 4 [
       (gogoproto.nullable) = false,
       (gogoproto.moretags) = "yaml:\"withdraw_fee_coins\"",

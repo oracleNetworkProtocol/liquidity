@@ -54,7 +54,7 @@ func GetCmdQueryPoolWithdrawSuccessMsgs() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "withdraws_finish [pool-id]",
 		Args:  cobra.ExactArgs(1),
-		Short: "Query all completed swap messages of liquidity pool",
+		Short: "Query all completed withdraw messages of liquidity pool",
 		Long: strings.TrimSpace(
 			fmt.Sprintf(`Query all completed withdraws messages of liquidity pool on the specified pool
 
@@ -64,7 +64,7 @@ To query for past blocks, query the block height using the REST/gRPC API of a no
 Example:
 $ %s query %s withdraws_finish 1
 
-Example (with depositor address):
+Example (with withdraw address):
 $ %[1]s query %[2]s withdraws_finish 1 --withdraw-address=[address]
 `,
 				version.AppName, types.ModuleName,
@@ -178,7 +178,7 @@ To query for past blocks, query the block height using the REST/gRPC API of a no
 Example:
 $ %s query %s swaps_finish 1
 
-Example (with depositor address):
+Example (with swap address):
 $ %[1]s query %[2]s swaps_finish 1 --swap-address=[address]
 `,
 				version.AppName, types.ModuleName,
