@@ -151,6 +151,18 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg *types.MsgCreatePool) (types.Poo
 	k.SetPoolBatch(ctx, batch)
 
 	reserveCoins := k.GetReserveCoins(ctx, pool)
+
+	//Add deposite success msg
+	var depositeSuccessMsg = types.DepositSuccessMsg{
+		MsgHeight:        batch.BeginHeight,
+		DepositorAddress: msg.PoolCreatorAddress,
+		PoolId:           pool.Id,
+		MsgIndex:         0,
+		DepositCoins:     reserveCoins,
+		InputCoins:       msg.DepositCoins,
+	}
+	k.SetPoolDepositSuccessMsg(ctx, pool.Id, poolCreator, depositeSuccessMsg)
+
 	lastReserveRatio := sdk.NewDecFromInt(reserveCoins[0].Amount).Quo(sdk.NewDecFromInt(reserveCoins[1].Amount))
 	logger := k.Logger(ctx)
 	logger.Debug(
