@@ -31,11 +31,11 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	paramscutils "github.com/cosmos/cosmos-sdk/x/params/client/utils"
 
+	lapp "github.com/oracleNetworkProtocol/liquidity/app"
+	"github.com/oracleNetworkProtocol/liquidity/x/liquidity"
 	"github.com/oracleNetworkProtocol/liquidity/x/liquidity/client/cli"
 	liquiditytestutil "github.com/oracleNetworkProtocol/liquidity/x/liquidity/client/testutil"
 	liquiditytypes "github.com/oracleNetworkProtocol/liquidity/x/liquidity/types"
-	lapp "github.com/tendermint/liquidity/app"
-	"github.com/tendermint/liquidity/x/liquidity"
 
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	tmjson "github.com/tendermint/tendermint/libs/json"

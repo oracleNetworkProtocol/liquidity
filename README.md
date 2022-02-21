@@ -35,7 +35,7 @@ For details, see the [Liquidity Module Light Paper](doc/LiquidityModuleLightPape
 Requirement | Notes
 ----------- | -----------------
 Go version  | Go1.17 or higher
-Cosmos SDK  | v0.44.5 or higher
+Cosmos SDK  | v0.45.0 or higher
 
 ### Get Liquidity Module source code
 

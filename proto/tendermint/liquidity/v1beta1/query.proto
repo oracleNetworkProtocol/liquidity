@@ -374,7 +374,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -407,7 +407,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all deposit messages in the current finish of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -441,7 +441,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all swap messages in the current finish of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -474,7 +474,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all swap messages in the current finish of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -509,7 +509,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all withdraw messages in the current finish of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
@@ -542,7 +542,7 @@ service Query {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "Returns a list of all withdraw messages in the current finish of the pool with pagination result.";
             external_docs: {
-                url: "https://github.com/tendermint/liquidity/blob/develop/doc/client.md";
+                url: "https://github.com/oracleNetworkProtocol/liquidity/blob/develop/doc/client.md";
                 description: "Find out more about the query and error codes";
             }
             responses: {
